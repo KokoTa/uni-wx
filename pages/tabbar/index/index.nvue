@@ -1,0 +1,18 @@
+<template>
+	<view class="page">
+		<view class="flex">
+			<view class="flex-1 main-gb-color rounded-circle" style="height: 200rpx;"></view>
+			<view class="flex-1 main-font-color" style="height: 100rpx;">Greeting</view>
+			<text class="iconfont font-lg">&#xe6dc;</text>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+	}
+</script>
+
+<style>
+
+</style>
