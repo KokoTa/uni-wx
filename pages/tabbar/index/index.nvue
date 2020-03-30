@@ -2,24 +2,44 @@
 	<view>
 		<!-- 导航 -->
 		<NavBar title="微信"></NavBar>
-		
+
 		<!-- 列表 -->
-		<view style="height: 2000rpx;">
-			<text>Hello</text>
-		</view>
+		<block v-for="(item, index) in list" :key="index">
+			<ListItem :item="item" :index="index"></ListItem>
+		</block>
 	</view>
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar.vue'
-	
+	import NavBar from '@/components/nav-bar.vue';
+	import ListItem from '@/components/list-item.vue'
+
 	export default {
 		components: {
-			NavBar
+			NavBar,
+			ListItem
+		},
+		data() {
+			return {
+				list: [
+					{
+						avatar: '/static/userpic/14.jpg',
+						nickname: '昵称',
+						update_time: 1585565366040,
+						data: 'Hello',
+						noreadnum: 1
+					},
+					{
+						avatar: '/static/userpic/14.jpg',
+						nickname: '昵称2',
+						update_time: 1585565366040,
+						data: 'Hello',
+						noreadnum: 2
+					}
+				]
+			};
 		}
-	}
+	};
 </script>
 
-<style>
-
-</style>
+<style></style>

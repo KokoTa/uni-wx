@@ -10,3 +10,7 @@
 8. 获取 APP 状态栏高度 `plus.navigator.getStatusbarHeight()`，动态获取的值单位为 `px`
 9. text 里不能用插槽，可以用 props 代替，详情见 `icon-button` 组件
 10. 组件里面不能用 `onLoad` 生命周期
+11. `image` 必须设置宽高
+12. 不支持 `z-index`
+13. 自定义组件只能用 `.vue` 格式的
+14. `view` 的 onpress(长按) 不能获取到坐标，替换成 `div` 后可以(新版本已修复)
