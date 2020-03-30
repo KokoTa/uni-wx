@@ -1,15 +1,22 @@
 <template>
-	<view class="page">
-		<view class="flex">
-			<view class="flex-1 main-gb-color rounded-circle" style="height: 200rpx;"></view>
-			<view class="flex-1 main-font-color" style="height: 100rpx;">Greeting</view>
-			<text class="iconfont font-lg">&#xe6dc;</text>
+	<view>
+		<!-- 导航 -->
+		<NavBar title="微信"></NavBar>
+		
+		<!-- 列表 -->
+		<view style="height: 2000rpx;">
+			<text>Hello</text>
 		</view>
 	</view>
 </template>
 
 <script>
+	import NavBar from '@/components/nav-bar.vue'
+	
 	export default {
+		components: {
+			NavBar
+		}
 	}
 </script>
 
