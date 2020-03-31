@@ -16,18 +16,6 @@
 			"path": "pages/tabbar/my/my",
 			"style": {}
 		}
-	    ,{
-            "path" : "components/nav-bar/nav-bar",
-            "style" : {}
-        }
-        ,{
-            "path" : "components/icon-button/icon-button",
-            "style" : {}
-        }
-        ,{
-            "path" : "components/icon-button/icon-button",
-            "style" : {}
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

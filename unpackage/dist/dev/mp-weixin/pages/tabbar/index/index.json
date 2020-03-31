@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "nav-bar": "/components/nav-bar"
+    "nav-bar": "/components/nav-bar",
+    "list-item": "/components/list-item",
+    "popup": "/components/popup"
   }
 }

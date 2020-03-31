@@ -3,10 +3,7 @@
     "pages/tabbar/index/index",
     "pages/tabbar/mail/mail",
     "pages/tabbar/find/find",
-    "pages/tabbar/my/my",
-    "components/nav-bar/nav-bar",
-    "components/icon-button/icon-button",
-    "components/icon-button/icon-button"
+    "pages/tabbar/my/my"
   ],
   "subPackages": [],
   "window": {
@@ -47,5 +44,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

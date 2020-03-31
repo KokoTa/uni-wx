@@ -36,7 +36,21 @@
 		},
 		methods: {
 			longpress(e) {
-				console.log(e)
+				let x = 0, y = 0
+				
+				// #ifdef APP-PLUS-NVUE
+				if (Array.isArray(e.changedTouches) && e.changedTouches.length) {
+					x = e.changedTouches[0].screenX
+					y = e.changedTouches[0].screenY
+				}
+				// #endif
+				
+				// #ifdef MP
+				x = e.detail.x
+				y = e.detail.y
+				// #endif
+			
+				this.$emit('long', { x, y })
 			}
 		}
 	};

@@ -14,3 +14,5 @@
 12. 不支持 `z-index`
 13. 自定义组件只能用 `.vue` 格式的
 14. `view` 的 onpress(长按) 不能获取到坐标，替换成 `div` 后可以(新版本已修复)
+15. 小程序 和 APP 获取点击坐标的方式不同，前者在 `detail`，后者在 `changedTouches`
+16. APP 的动画要调用 weex 的 animate api

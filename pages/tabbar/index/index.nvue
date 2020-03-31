@@ -1,45 +1,87 @@
 <template>
 	<view>
 		<!-- 导航 -->
-		<NavBar title="微信"></NavBar>
+		<NavBar title="微信" :noreadnum="3"></NavBar>
 
 		<!-- 列表 -->
-		<block v-for="(item, index) in list" :key="index">
-			<ListItem :item="item" :index="index"></ListItem>
-		</block>
+		<block v-for="(item, index) in list" :key="index"><ListItem :item="item" :index="index" @long="long"></ListItem></block>
+
+		<!-- 弹出层 -->
+		<Popup ref="popup" :bodyWidth="240" :bodyHeight="getMenusHeight">
+			<view class="flex flex-column" style="width: 240rpx;" :style="getMenusSytle">
+				<view v-for="(item, index) in menus" class="flex-1 flex align-center pl-3" hover-class="bg-light" :key="index" @click="clickEvent(item.event)">
+					<text class="font-md">{{ item.name }}</text>
+				</view>
+			</view>
+		</Popup>
 	</view>
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar.vue';
-	import ListItem from '@/components/list-item.vue'
+import NavBar from '@/components/nav-bar.vue';
+import ListItem from '@/components/list-item.vue';
+import Popup from '@/components/popup.vue';
 
-	export default {
-		components: {
-			NavBar,
-			ListItem
+export default {
+	components: {
+		NavBar,
+		ListItem,
+		Popup
+	},
+	computed: {
+		getMenusHeight() {
+			const H = 100
+			return this.menus.length * H
 		},
-		data() {
-			return {
-				list: [
-					{
-						avatar: '/static/userpic/14.jpg',
-						nickname: '昵称',
-						update_time: 1585565366040,
-						data: 'Hello',
-						noreadnum: 1
-					},
-					{
-						avatar: '/static/userpic/14.jpg',
-						nickname: '昵称2',
-						update_time: 1585565366040,
-						data: 'Hello',
-						noreadnum: 2
-					}
-				]
-			};
+		getMenusSytle() {
+			return `height: ${this.getMenusHeight}rpx`
 		}
-	};
+	},
+	data() {
+		return {
+			menus: [
+				{
+					name: '设为置顶',
+					event: 'setTop'
+				},
+				{
+					name: '删除该聊天',
+					event: 'delChat'
+				}
+			],
+			list: [
+				{
+					avatar: '/static/userpic/14.jpg',
+					nickname: '昵称',
+					update_time: 1585565366040,
+					data: 'Hello',
+					noreadnum: 1
+				},
+				{
+					avatar: '/static/userpic/14.jpg',
+					nickname: '昵称2',
+					update_time: 1585565366040,
+					data: 'Hello',
+					noreadnum: 2
+				}
+			]
+		};
+	},
+	methods: {
+		long({ x, y }) {
+			this.$refs.popup.show(x, y);
+		},
+		// 事件分发
+		clickEvent(event) {
+			switch(event) {
+				case 'setTop':
+					break
+				case 'delChat':
+					break
+			}
+		}
+	}
+};
 </script>
 
 <style></style>

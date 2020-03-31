@@ -1,6 +1,7 @@
 {
+  "component": true,
   "usingComponents": {
-    "icon-button": "/components/icon-button"
-  },
-  "component": true
+    "icon-button": "/components/icon-button",
+    "popup": "/components/popup"
+  }
 }
