@@ -1,6 +1,6 @@
 <template>
 	<!-- 列表项 -->
-	<view class="flex align-stretch" hover-class="bg-light" @click="" @longpress="longpress">
+	<view class="flex align-stretch" :class="item.isTop ? 'bg-light' : 'bg-white'" hover-class="bg-light" @longpress="longpress">
 		<!-- 头像 -->
 		<view class="flex align-center justify-center position-relative" style="width: 145rpx;">
 			<Avatar :src="item.avatar" :size="92"></Avatar>
@@ -50,7 +50,7 @@
 				y = e.detail.y
 				// #endif
 			
-				this.$emit('long', { x, y })
+				this.$emit('long', { x, y, index: this.index })
 			}
 		}
 	};

@@ -193,6 +193,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
 {
   components: {
     NavBar: NavBar,
@@ -210,6 +217,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
+      itemIndex: -1,
       menus: [
       {
         name: '设为置顶',
@@ -226,30 +234,57 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         nickname: '昵称',
         update_time: 1585565366040,
         data: 'Hello',
-        noreadnum: 1 },
+        noreadnum: 1,
+        isTop: false },
 
       {
-        avatar: '/static/userpic/14.jpg',
+        avatar: '/static/userpic/13.jpg',
         nickname: '昵称2',
         update_time: 1585565366040,
         data: 'Hello',
-        noreadnum: 2 }] };
+        noreadnum: 2,
+        isTop: true },
+
+      {
+        avatar: '/static/userpic/12.jpg',
+        nickname: '昵称3',
+        update_time: 1585565366040,
+        data: 'Hello',
+        noreadnum: 3,
+        isTop: false }] };
 
 
 
   },
   methods: {
-    long: function long(_ref) {var x = _ref.x,y = _ref.y;
+    long: function long(_ref) {var x = _ref.x,y = _ref.y,index = _ref.index;
+      this.itemIndex = index;
+
+      var item = this.list[this.itemIndex];
+      this.menus[0].name = item.isTop ? '取消置顶' : '设为置顶';
+
       this.$refs.popup.show(x, y);
     },
     // 事件分发
     clickEvent: function clickEvent(event) {
       switch (event) {
         case 'setTop':
+          this.setTop();
           break;
         case 'delChat':
+          this.delChat();
           break;}
 
+      this.$refs.popup.hide();
+    },
+    // 删除聊天
+    delChat: function delChat() {
+      this.list.splice(this.itemIndex, 1);
+    },
+    // 置顶切换
+    setTop: function setTop() {
+      var item = this.list[this.itemIndex];
+      item.isTop = !item.isTop;
     } } };exports.default = _default;
 
 /***/ }),
