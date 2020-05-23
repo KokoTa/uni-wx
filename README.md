@@ -7,7 +7,7 @@
 5. 取消原生APP导航 `titleNView: false`
 6. 取消滚动条 `scrollIndicator: "none"`
 7. 只支持 Flex 布局
-8. 获取 APP 状态栏高度 `plus.navigator.getStatusbarHeight()`，动态获取的值单位为 `px`
+8. 获取 APP 状态栏高度 `plus.navigator.getStatusbarHeight()`，动态获取的值单位为 `px`，累加时记得调用 `uni.upx2px()` 转换单位，upx 就是 rpx
 9. text 里不能用插槽，可以用 props 代替，详情见 `icon-button` 组件
 10. 组件里面不能用 `onLoad` 生命周期
 11. `image` 必须设置宽高
@@ -15,4 +15,4 @@
 13. 自定义组件只能用 `.vue` 格式的
 14. `view` 的 onpress(长按) 不能获取到坐标，替换成 `div` 后可以(新版本已修复)
 15. 小程序 和 APP 获取点击坐标的方式不同，前者在 `detail`，后者在 `changedTouches`
-16. APP 的动画要调用 weex 的 animate api
+16. APP 的动画要调用 weex 的 `weex.requireModule('animation')`
