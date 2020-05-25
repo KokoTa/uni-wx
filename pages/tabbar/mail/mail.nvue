@@ -11,7 +11,7 @@
 		  		  <view class="py-2 px-3 border-bottom">
 		  			  <text class="font-md text-dark">{{item.letter}}</text>
 		  		  </view>
-		  		  <NormalListItem v-for="(item, index) in item.data" :key="index" :title="item" cover="/static/userpic/1.jpg"></NormalListItem>
+		  		  <NormalListItem v-for="(item2, index2) in item.data" :key="index2" :title="item2" cover="/static/userpic/1.jpg"></NormalListItem>
 		  </view>
 	  </block>
   </view>

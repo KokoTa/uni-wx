@@ -1,0 +1,49 @@
+<template>
+	<view>
+		<!-- 导航 -->
+		<NavBar title="王小明" :showBack="true">
+			<IconButton slot="right" :icon="'\ue6fd'"></IconButton>
+		</NavBar>
+		
+		<!-- 聊天区 -->
+		<scroll-view scroll-y class="position-fixed left-0 right-0" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
+		
+		</scroll-view>
+		
+		<!-- 底部输入框 -->
+		<view class="position-fixed bottom-0 w-100 border-top flex align-center" style="background-color: #F7F7F6; height: 105rpx;">
+			<IconButton :icon="'\ue6fd'"></IconButton>
+			<textarea class="flex-1 p-1 font-md" fixed style="height: 75rpx;"></textarea>
+			<IconButton :icon="'\ue6fd'"></IconButton>
+			<IconButton :icon="'\ue6fd'"></IconButton>
+		</view>
+	</view>
+</template>
+
+<script>
+	import NavBar from '@/components/nav-bar.vue';
+	import IconButton from '@/components/icon-button.vue'
+	
+	export default {
+		components: {
+			NavBar,
+			IconButton
+		},
+		data() {
+			return {
+				statusBarHeight: 0,
+				navBarHeight: 0
+			}
+		},
+		mounted() {
+			// #ifdef APP-PLUS-NVUE
+			this.statusBarHeight = plus.navigator.getStatusbarHeight(); 
+			// #endif
+			this.navBarHeight = this.statusBarHeight + uni.upx2px(90);
+		}
+	}
+</script>
+
+<style>
+
+</style>

@@ -108,7 +108,7 @@
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/list-item":"components/list-item","components/nav-bar":"components/nav-bar","components/popup":"components/popup","components/avatar":"components/avatar","components/badge":"components/badge","components/icon-button":"components/icon-button"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/list-item":"components/list-item","components/nav-bar":"components/nav-bar","components/popup":"components/popup","components/divider":"components/divider","components/icon-button":"components/icon-button","components/normal-list-item":"components/normal-list-item","components/avatar":"components/avatar","components/badge":"components/badge"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -1,6 +1,6 @@
 <template>
 	<!-- 首页列表项 -->
-	<view class="flex align-stretch" :class="item.isTop ? 'bg-light' : 'bg-white'" hover-class="bg-light" @longpress="longpress">
+	<view class="flex align-stretch" :class="item.isTop ? 'bg-light' : 'bg-white'" hover-class="bg-light" @longpress="longpress" @click="onClick">
 		<!-- 头像 -->
 		<view class="flex align-center justify-center position-relative" style="width: 145rpx;">
 			<Avatar :src="item.avatar" :size="92"></Avatar>
@@ -52,6 +52,11 @@ export default {
 			// #endif
 
 			this.$emit('long', { x, y, index: this.index });
+		},
+		onClick(e) {
+			uni.navigateTo({
+				url: "/pages/chat/chat/chat"
+			})
 		}
 	}
 };

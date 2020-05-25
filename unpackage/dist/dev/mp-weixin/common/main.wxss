@@ -105,11 +105,11 @@
 .col-offset-0 {margin-left: 0;}
 /* flex 布局 */
 .flex{
-	
+
 	display:-webkit-box;
 	display:-webkit-flex;
 	display:flex;
-	
+
 	-webkit-box-orient:horizontal;
 	-webkit-box-direction:normal;
 	-webkit-flex-direction:row;
@@ -137,14 +137,12 @@
 }
 .align-end{ -webkit-box-align: end; -webkit-align-items: flex-end; align-items: flex-end;
 }
-
 .content-start {-webkit-align-content: flex-start;align-content: flex-start;}
 .content-end {-webkit-align-content: flex-end;align-content: flex-end;}
 .content-center {-webkit-align-content: center;align-content: center;}
 .content-between {-webkit-align-content: space-between;align-content: space-between;}
 .content-around {-webkit-align-content: space-around;align-content: space-around;}
 .content-stretch {-webkit-align-content: stretch;align-content: stretch;}
-
 .flex-1{ -webkit-box-flex: 1; -webkit-flex: 1; flex: 1;
 }
 .flex-2{ -webkit-box-flex: 2; -webkit-flex: 2; flex: 2;
@@ -155,10 +153,8 @@
 }
 .flex-5{ -webkit-box-flex: 5; -webkit-flex: 5; flex: 5;
 }
-
 .flex-shrink{ -webkit-flex-shrink: 0; flex-shrink: 0;
 }
-
 .container {
   padding-right: 20rpx;
   padding-left: 20rpx;
@@ -166,10 +162,8 @@
 /*  -- 内外边距 -- */
 .m-0 { margin: 0;
 }
-
 .m-auto{ margin: auto;
 }
-
 .m-1 { margin: 10rpx;
 }
 .m-2 { margin: 20rpx;
@@ -182,10 +176,8 @@
 }
 .mt-0 { margin-top: 0;
 }
-
 .mt-auto { margin-top: auto;
 }
-
 .mt-1 { margin-top: 10rpx;
 }
 .mt-2 { margin-top: 20rpx;
@@ -198,10 +190,8 @@
 }
 .mb-0 { margin-bottom: 0;
 }
-
 .mb-auto { margin-bottom: auto;
 }
-
 .mb-1 { margin-bottom: 10rpx;
 }
 .mb-2 { margin-bottom: 20rpx;
@@ -214,10 +204,8 @@
 }
 .ml-0 { margin-left: 0;
 }
-
 .ml-auto { margin-left: auto;
 }
-
 .ml-1 { margin-left: 10rpx;
 }
 .ml-2 { margin-left: 20rpx;
@@ -230,10 +218,8 @@
 }
 .mr-0 { margin-right: 0;
 }
-
 .mr-auto { margin-right: auto;
 }
-
 .mr-1 { margin-right: 10rpx;
 }
 .mr-2 { margin-right: 20rpx;
@@ -246,10 +232,8 @@
 }
 .my-0 { margin-top: 0; margin-bottom: 0;
 }
-
 .my-auto { margin-top: auto; margin-bottom: auto;
 }
-
 .my-1 { margin-top: 10rpx; margin-bottom: 10rpx;
 }
 .my-2 { margin-top: 20rpx; margin-bottom: 20rpx;
@@ -262,10 +246,8 @@
 }
 .mx-0 { margin-left: 0; margin-right: 0;
 }
-
 .mx-auto { margin-left: auto; margin-right: auto;
 }
-
 .mx-1 { margin-left: 10rpx; margin-right: 10rpx;}
 .mx-2 { margin-left: 20rpx; margin-right: 20rpx;}
 .mx-3 { margin-left: 30rpx; margin-right: 30rpx;}
@@ -376,7 +358,6 @@
 .h5{font-size:30rpx; line-height:1.8;}
 .h6{font-size:28rpx; line-height:1.8;}
 /* 文字缩进 */
-
 .text-indent{text-indent:2;}
 
 /* 文字划线 */
@@ -387,10 +368,8 @@
 .text-center { text-align: center;}
 /* 文字换行溢出处理 */
 .text-ellipsis {
-	
+
 	overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-	
-	
 }
 /* 文字粗细和斜体 */
 .font-weight-light {font-weight: 300;}
@@ -485,27 +464,34 @@
 .border-dark {border-color: #343a40;}
 .border-white {border-color: #FFFFFF;}
 /* 圆角 */
-.rounded { border-radius: 8rpx;}
+.rounded { -webkit-border-radius: 8rpx; border-radius: 8rpx;}
 .rounded-top {
-  border-top-left-radius: 8rpx;
-  border-top-right-radius: 8rpx;
+  -webkit-border-top-left-radius: 8rpx;
+          border-top-left-radius: 8rpx;
+  -webkit-border-top-right-radius: 8rpx;
+          border-top-right-radius: 8rpx;
 }
 .rounded-right {
-  border-top-right-radius: 8rpx;
-  border-bottom-right-radius: 8rpx;
+  -webkit-border-top-right-radius: 8rpx;
+          border-top-right-radius: 8rpx;
+  -webkit-border-bottom-right-radius: 8rpx;
+          border-bottom-right-radius: 8rpx;
 }
 .rounded-bottom {
-  border-bottom-right-radius: 8rpx;
-  border-bottom-left-radius: 8rpx;
+  -webkit-border-bottom-right-radius: 8rpx;
+          border-bottom-right-radius: 8rpx;
+  -webkit-border-bottom-left-radius: 8rpx;
+          border-bottom-left-radius: 8rpx;
 }
 .rounded-left {
-  border-top-left-radius: 8rpx;
-  border-bottom-left-radius: 8rpx;
+  -webkit-border-top-left-radius: 8rpx;
+          border-top-left-radius: 8rpx;
+  -webkit-border-bottom-left-radius: 8rpx;
+          border-bottom-left-radius: 8rpx;
 }
-.rounded-circle { border-radius: 100rpx;}
-.rounded-0 { border-radius: 0;}
+.rounded-circle { -webkit-border-radius: 100rpx; border-radius: 100rpx;}
+.rounded-0 { -webkit-border-radius: 0; border-radius: 0;}
 /* 显示 */
-
 .d-none{ display: none;
 }
 .d-inline-block{ display: inline-block;
@@ -544,21 +530,23 @@
 .bottom-0 { bottom: 0;
 }
 /* 阴影 */
-
-.shadow { box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15);}
-.shadow-lg { box-shadow: 0rpx 40rpx 100rpx 0rpx rgba(0, 0, 0, 0.175);}
-.shadow-none { box-shadow: none !important;}
+.shadow { -webkit-box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15); box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15);}
+.shadow-lg { -webkit-box-shadow: 0rpx 40rpx 100rpx 0rpx rgba(0, 0, 0, 0.175); box-shadow: 0rpx 40rpx 100rpx 0rpx rgba(0, 0, 0, 0.175);}
+.shadow-none { -webkit-box-shadow: none !important; box-shadow: none !important;}
 
 /* 页面背景色 */
 .page {
 	background-color: #EDEDED;
 	
+
+
+
+
+
 	
-	
-	
+
 	min-height: 100%;
 	height: auto;
-	
 }
 /* 主背景色 */
 .main-gb-color {
@@ -568,7 +556,6 @@
 .main-font-color {
 	color: #08C060;
 }
-
 @font-face {font-family: "iconfont";
   src: url('https://at.alicdn.com/t/font_1365296_vumpzwvr0z.ttf') format('truetype')
 }

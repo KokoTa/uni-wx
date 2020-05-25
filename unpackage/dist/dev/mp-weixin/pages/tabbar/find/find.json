@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar",
+    "normal-list-item": "/components/normal-list-item",
+    "avatar": "/components/avatar",
+    "divider": "/components/divider"
+  }
 }

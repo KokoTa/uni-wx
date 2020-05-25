@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/tabbar/index/index",
-    "pages/tabbar/mail/mail",
+    "pages/tabbar/my/my",
     "pages/tabbar/find/find",
-    "pages/tabbar/my/my"
+    "pages/tabbar/mail/mail",
+    "pages/chat/chat/chat"
   ],
   "subPackages": [],
   "window": {
@@ -44,6 +45,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

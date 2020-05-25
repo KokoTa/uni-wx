@@ -9,6 +9,8 @@
 			<view class="w-100 flex align-center justify-between" style="height: 90rpx;">
 				<!-- 左侧 -->
 				<view class="flex align-center ml-3">
+					<!-- 返回 -->
+					<IconButton v-if="showBack" :icon="'\ue60d'" @click="back"></IconButton>
 					<!-- 标题 -->
 					<text class="font-md">{{ getTitle }}</text>
 				</view>
@@ -58,6 +60,10 @@
 			bgColor: {
 				type: String,
 				default: 'bg-white'
+			},
+			showBack: {
+				type: Boolean,
+				default: false
 			}
 		},
 		components: {
@@ -123,6 +129,11 @@
 			},
 			openExtend() {
 				this.$refs.popup.show(uni.upx2px(415), uni.upx2px(50))
+			},
+			back () {
+				uni.navigateBack({
+					delta: 1
+				})
 			}
 		}
 	}
