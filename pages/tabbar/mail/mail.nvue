@@ -1,12 +1,86 @@
 <template>
-  <view></view>
+  <view>
+	  <!-- 标题 -->
+	  <NavBar title="通讯录"></NavBar>
+	  
+	  <!-- 通用列表项 -->
+	  <NormalListItem v-for="(item, index) in topList" :key="index" :title="item.title" :cover="item.cover"></NormalListItem>
+	  <!-- 好友列表项 -->
+	  <block v-for="(item, index) in friendList" :key="index">
+		  <view v-if="item.data.length > 0">
+		  		  <view class="py-2 px-3 border-bottom">
+		  			  <text class="font-md text-dark">{{item.letter}}</text>
+		  		  </view>
+		  		  <NormalListItem v-for="(item, index) in item.data" :key="index" :title="item" cover="/static/userpic/1.jpg"></NormalListItem>
+		  </view>
+	  </block>
+  </view>
 </template>
 
 <script>
+	import NavBar from '@/components/nav-bar.vue'
+	import NormalListItem from '@/components/normal-list-item.vue'
+	
 	export default {
+		components: {
+			NavBar,
+			NormalListItem
+		},
 		data() {
 			return {
-				
+				topList: [
+					{
+						title: '新的朋友',
+						cover: '/static/userpic/1.jpg',
+						event: '标签'
+					},
+					{
+						title: '群聊',
+						cover: '/static/userpic/1.jpg',
+						event: '标签'
+					},
+					{
+						title: '标签',
+						cover: '/static/userpic/1.jpg',
+						event: '标签'
+					}
+				],
+				friendList: [
+					{
+						letter: "A",
+						data: [
+							"阿a",
+							"阿b",
+							"阿c",
+							"阿d",
+							"阿e",
+						]
+					},
+					{
+						letter: "B",
+						data: []
+					},
+					{
+						letter: "C",
+						data: [
+							"茨a",
+							"茨b",
+							"茨c",
+							"茨d",
+							"茨e",
+						]
+					},
+					{
+						letter: "D",
+						data: [
+							"迪a",
+							"迪b",
+							"迪c",
+							"迪d",
+							"迪e",
+						]
+					}
+				]
 			}
 		},
 		methods: {
