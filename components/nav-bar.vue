@@ -2,7 +2,7 @@
 	<!-- 导航栏 -->
 	<view>
 		<!-- 导航栏固定 -->
-		<view class="bg-light" :class="fixed ? 'position-fixed fixed-top' : ''">
+		<view class="bg-light" :class="getClass">
 			<!-- 状态栏 -->
 			<view :style="'height:' + appStatusBarHeight +'px'"></view>
 			<!-- 导航 -->
@@ -14,10 +14,12 @@
 				</view>
 				<!-- 右侧 -->
 				<view class="flex align-center">
-					<!-- 搜索按钮 -->
-					<IconButton :icon="'\ue6e3'" @click="search"></IconButton>
-					<!-- 添加按钮 -->
-					<IconButton :icon="'\ue682'" @click="openExtend"></IconButton>
+					<slot name="right">
+						<!-- 搜索按钮 -->
+						<IconButton :icon="'\ue6e3'" @click="search"></IconButton>
+						<!-- 添加按钮 -->
+						<IconButton :icon="'\ue682'" @click="openExtend"></IconButton>
+					</slot>
 				</view>
 			</view>
 			<!-- 扩展菜单栏 -->
@@ -52,6 +54,10 @@
 			noreadnum: {
 				type: Number,
 				default: 0
+			},
+			bgColor: {
+				type: String,
+				default: 'bg-white'
 			}
 		},
 		components: {
@@ -64,6 +70,10 @@
 			},
 			getTitle() {
 				return `${this.title}${this.noreadnum > 0 ? `(${this.noreadnum})` : ''}`
+			},
+			getClass() {
+				const fixedClass = this.fixed ? 'position-fixed fixed-top' : ''
+				return `${this.bgColor} ${fixedClass}`
 			}
 		},
 		data() {
