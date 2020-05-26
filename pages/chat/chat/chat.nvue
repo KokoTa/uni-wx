@@ -8,7 +8,7 @@
 		<!-- 聊天区 -->
 		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
 			<block v-for="(item, index) in list" :key="index">
-				<ChatItem :item="item"></ChatItem>
+				<ChatItem :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long"></ChatItem>
 			</block>
 		</scroll-view>
 		
@@ -19,6 +19,16 @@
 			<IconButton :icon="'\ue6fd'"></IconButton>
 			<IconButton :icon="'\ue6fd'"></IconButton>
 		</view>
+		
+		<!-- 扩展菜单栏 -->
+		<Popup ref="popup" :bodyWidth="240" :bodyHeight="getMenusHeight" :tabbarHeight="105">
+			<view class="flex flex-column" style="width: 240rpx;" :style="getMenusSytle">
+				<view v-for="(item, index) in getMenus" class="flex-1 flex align-center pl-3" hover-class="bg-light" :key="index"
+					@click="clickEvent(item.event)">
+					<text class="font-md">{{ item.name }}</text>
+				</view>
+			</view>
+		</Popup>
 	</view>
 </template>
 
@@ -27,49 +37,122 @@
 	import IconButton from '@/components/icon-button.vue'
 	import Avatar from '@/components/avatar.vue'
 	import ChatItem from '@/components/chat-item.vue'
+	import Popup from '@/components/popup.vue'
 	
 	export default {
 		components: {
 			NavBar,
 			IconButton,
 			Avatar,
-			ChatItem
+			ChatItem,
+			Popup
+		},
+		computed: {
+			getMenusHeight() {
+				const H = 100
+				return this.menus.length * H
+			},
+			getMenusSytle() {
+				return `height: ${this.getMenusHeight}rpx`
+			},
+			isSelf() {
+				const myId = 1
+				const userId = this.propIndex > -1 ? this.list[this.propIndex].user_id : 0
+				return myId === userId
+			},
+			getMenus() {
+				// 别人的气泡信息不能撤回，要排除
+				return this.menus.filter((item) => !(item.name === '撤回' && !this.isSelf))
+			}
 		},
 		data() {
 			return {
 				statusBarHeight: 0,
 				navBarHeight: 0,
-				
+				menus: [
+					{
+						name: '复制',
+						event: 'setTop'
+					},
+					{
+						name: '发送给朋友',
+						event: 'delChat'
+					},
+					{
+						name: '收藏',
+						event: 'delChat'
+					},
+					{
+						name: '删除',
+						event: 'delChat'
+					},
+					{
+						name: '多选',
+						event: 'delChat'
+					},
+					{
+						name: '撤回',
+						event: 'delChat'
+					}
+				],
 				list: [
 					{
 						avatar: '/static/userpic/10.jpg',
 						user_id: 1,
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
-						data: '你好1'
+						data: '你好1',
+						createTime: 1590472772
 					},
 					{
 						avatar: '/static/userpic/11.jpg',
 						user_id: 2,
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
-						data: '你好2'
+						data: '你好2',
+						createTime: 1590472572
 					},
 					{
 						avatar: '/static/userpic/10.jpg',
 						user_id: 1,
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
-						data: '你好1'
+						data: '你好1',
+						createTime: 1590472472
 					},
 					{
 						avatar: '/static/userpic/11.jpg',
 						user_id: 2,
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
-						data: '你好2'
+						data: '你好2',
+						createTime: 1590472072
+					},
+					{
+						avatar: '/static/userpic/10.jpg',
+						user_id: 1,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好1',
+						createTime: 1590472472
+					},
+					{
+						avatar: '/static/userpic/11.jpg',
+						user_id: 2,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好2',
+						createTime: 1590472072
 					}
-				]
+				],
+				// 当前操作的聊天气泡
+				propIndex: 0,
+			}
+		},
+		methods: {
+			long({ x, y, index }) {
+				this.propIndex = index
+				this.$refs.popup.show(x, y);
 			}
 		},
 		mounted() {
