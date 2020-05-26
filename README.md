@@ -16,5 +16,7 @@
 14. `view` 的 onpress(长按) 不能获取到坐标，替换成 `div` 后可以(新版本已修复)
 15. 小程序 和 APP 获取点击坐标的方式不同，前者在 `detail`，后者在 `changedTouches`
 16. APP 的动画要调用 weex 的 `weex.requireModule('animation')`
-17. `textarea` 如果在 `fixed` 容器中，则它需要添加 `:fixed="true"`
+17. `textarea` 如果在 `fixed` 容器中，则它需要添加 `:fixed="true"`，为了解决键盘顶起窗口问题，需要添加 `:adjust-position="false"`
 18. `text` 不能嵌套 `text`，uni 的 slot 默认会用 `text` 在最外侧包裹一层，因此如果是自定义的 text 组件，请不要使用 slot
+19. 接 17 的问题，设置后会发现 `textarea` 就算键盘弹出来了还是会固定在屏幕最底部，此时需要监听键盘高度变化 `uni.onKeyboardHeightChange`
+20. 通过 API 获取的长度值单位都是 px

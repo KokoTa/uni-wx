@@ -6,18 +6,21 @@
 		</NavBar>
 		
 		<!-- 聊天区 -->
-		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
+		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" :style="chatBodyTopAndBottom" :show-scrollbar="false">
 			<block v-for="(item, index) in list" :key="index">
-				<ChatItem :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long"></ChatItem>
+				<ChatItem ref="chatItem" :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long"></ChatItem>
 			</block>
 		</scroll-view>
 		
 		<!-- 底部输入框 -->
-		<view class="position-fixed bottom-0 w-100 border-top flex align-center" style="background-color: #F7F7F6; height: 105rpx;">
+		<view class="position-fixed w-100 border-top flex align-center" :style="`background-color: #F7F7F6; height: 105rpx; bottom: ${keyboardHeight}px;`">
 			<IconButton :icon="'\ue6fd'"></IconButton>
-			<textarea class="flex-1 p-1 font-md" fixed style="height: 75rpx;"></textarea>
+			<textarea v-model="text" class="flex-1 p-1 font-md" style="height: 75rpx;" fixed :adjust-position="false" ></textarea>
 			<IconButton :icon="'\ue6fd'"></IconButton>
-			<IconButton :icon="'\ue6fd'"></IconButton>
+			<IconButton v-if="text.length === 0" :icon="'\ue6fd'"></IconButton>
+			<view v-else class="main-gb-color rounded mr-3 px-2 py-1" @click="send('text')">
+				<text class="font-md text-light">发送</text>
+			</view>
 		</view>
 		
 		<!-- 扩展菜单栏 -->
@@ -38,6 +41,10 @@
 	import Avatar from '@/components/avatar.vue'
 	import ChatItem from '@/components/chat-item.vue'
 	import Popup from '@/components/popup.vue'
+	
+	// #ifdef APP-PLUS-NVUE
+	const dom = weex.requireModule('dom')
+	// #endif
 	
 	export default {
 		components: {
@@ -63,6 +70,10 @@
 			getMenus() {
 				// 别人的气泡信息不能撤回，要排除
 				return this.menus.filter((item) => !(item.name === '撤回' && !this.isSelf))
+			},
+			// 聊天区域 bottom(键盘顶起后，聊天内容区域也要相应改变)
+			chatBodyTopAndBottom() {
+				return `top: ${this.navBarHeight}px; bottom: ${uni.upx2px(105) + this.keyboardHeight}px;`
 			}
 		},
 		data() {
@@ -92,7 +103,7 @@
 					},
 					{
 						name: '撤回',
-						event: 'delChat'
+						event: 'remove'
 					}
 				],
 				list: [
@@ -102,7 +113,8 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好1',
-						createTime: 1590472772
+						createTime: 1590472772,
+						isRemove: false
 					},
 					{
 						avatar: '/static/userpic/11.jpg',
@@ -110,7 +122,8 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好2',
-						createTime: 1590472572
+						createTime: 1590472572,
+						isRemove: false
 					},
 					{
 						avatar: '/static/userpic/10.jpg',
@@ -118,7 +131,8 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好1',
-						createTime: 1590472472
+						createTime: 1590472472,
+						isRemove: false
 					},
 					{
 						avatar: '/static/userpic/11.jpg',
@@ -126,7 +140,8 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好2',
-						createTime: 1590472072
+						createTime: 1590472072,
+						isRemove: false
 					},
 					{
 						avatar: '/static/userpic/10.jpg',
@@ -134,7 +149,8 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好1',
-						createTime: 1590472472
+						createTime: 1590472472,
+						isRemove: false
 					},
 					{
 						avatar: '/static/userpic/11.jpg',
@@ -142,24 +158,67 @@
 						nickname: '昵称',
 						type: 'text', // image/audio/video/text/file/share
 						data: '你好2',
-						createTime: 1590472072
+						createTime: 1590472072,
+						isRemove: true
 					}
 				],
-				// 当前操作的聊天气泡
-				propIndex: 0,
+				propIndex: 0, // 当前操作的聊天气泡
+				keyboardHeight: 0,
+				text: ''
 			}
 		},
 		methods: {
 			long({ x, y, index }) {
 				this.propIndex = index
 				this.$refs.popup.show(x, y);
+			},
+			clickEvent(type) {
+				switch(type) {
+					case 'remove':
+						this.list[this.propIndex].isRemove = true
+						break;
+				}
+				this.$refs.popup.hide()
+			},
+			// 聊天区域滚动到底部
+			scrollChatBodyToBottom() {
+				// #ifdef APP-PLUS-NVUE
+				const lastItem = this.$refs.chatItem[this.$refs.chatItem.length - 1]
+				if (lastItem) dom.scrollToElement(lastItem, {})
+				// #endif
+			},
+			send(type) {
+				const obj = {
+					avatar: '/static/userpic/10.jpg',
+					user_id: 1,
+					nickname: '昵称',
+					type: type, // image/audio/video/text/file/share
+					data: this.text,
+					createTime: (new Date()).getTime(),
+					isRemove: false
+				}
+				
+				switch(type) {
+					case 'text':
+						this.list.push(obj)
+						this.text = ''
+				}
+				
+				setTimeout(() => this.scrollChatBodyToBottom(), 100)
 			}
 		},
 		mounted() {
 			// #ifdef APP-PLUS-NVUE
+			// 获取手机顶部 bar 的高度(包含信号啊、wifi啊的那个 bar)
 			this.statusBarHeight = plus.navigator.getStatusbarHeight(); 
 			// #endif
 			this.navBarHeight = this.statusBarHeight + uni.upx2px(90);
+			
+			// 监听键盘高度变化(只有APP和微信/腾讯小程序支持)
+			uni.onKeyboardHeightChange(res => {
+				this.keyboardHeight = res.height
+				if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
+			})
 		}
 	}
 </script>
