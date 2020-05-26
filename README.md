@@ -17,3 +17,4 @@
 15. 小程序 和 APP 获取点击坐标的方式不同，前者在 `detail`，后者在 `changedTouches`
 16. APP 的动画要调用 weex 的 `weex.requireModule('animation')`
 17. `textarea` 如果在 `fixed` 容器中，则它需要添加 `:fixed="true"`
+18. `text` 不能嵌套 `text`，uni 的 slot 默认会用 `text` 在最外侧包裹一层，因此如果是自定义的 text 组件，请不要使用 slot

@@ -6,8 +6,10 @@
 		</NavBar>
 		
 		<!-- 聊天区 -->
-		<scroll-view scroll-y class="position-fixed left-0 right-0" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
-		
+		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
+			<block v-for="(item, index) in list" :key="index">
+				<ChatItem :item="item"></ChatItem>
+			</block>
 		</scroll-view>
 		
 		<!-- 底部输入框 -->
@@ -23,16 +25,51 @@
 <script>
 	import NavBar from '@/components/nav-bar.vue';
 	import IconButton from '@/components/icon-button.vue'
+	import Avatar from '@/components/avatar.vue'
+	import ChatItem from '@/components/chat-item.vue'
 	
 	export default {
 		components: {
 			NavBar,
-			IconButton
+			IconButton,
+			Avatar,
+			ChatItem
 		},
 		data() {
 			return {
 				statusBarHeight: 0,
-				navBarHeight: 0
+				navBarHeight: 0,
+				
+				list: [
+					{
+						avatar: '/static/userpic/10.jpg',
+						user_id: 1,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好1'
+					},
+					{
+						avatar: '/static/userpic/11.jpg',
+						user_id: 2,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好2'
+					},
+					{
+						avatar: '/static/userpic/10.jpg',
+						user_id: 1,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好1'
+					},
+					{
+						avatar: '/static/userpic/11.jpg',
+						user_id: 2,
+						nickname: '昵称',
+						type: 'text', // image/audio/video/text/file/share
+						data: '你好2'
+					}
+				]
 			}
 		},
 		mounted() {
