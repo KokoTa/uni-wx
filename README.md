@@ -20,3 +20,4 @@
 18. `text` 不能嵌套 `text`，uni 的 slot 默认会用 `text` 在最外侧包裹一层，因此如果是自定义的 text 组件，请不要使用 slot
 19. 接 17 的问题，设置后会发现 `textarea` 就算键盘弹出来了还是会固定在屏幕最底部，此时需要监听键盘高度变化 `uni.onKeyboardHeightChange`
 20. 通过 API 获取的长度值单位都是 px
+21. nvue 中的 `scroll-view` 无法监听 `click` 事件，需要手动加一层蒙版

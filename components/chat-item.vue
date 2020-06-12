@@ -80,6 +80,7 @@ export default {
 	},
 	mounted() {
 		// #ifdef APP-PLUS-NVUE
+		// 移除时虽然DOM布局变化了，但是内容并不会马上改变，有时间差，所以要用动画过渡一下
 		this.animation = weex.requireModule('animation')
 		this.$watch('item.isRemove', (newVal, oldVal) => {
 			if (newVal) {
