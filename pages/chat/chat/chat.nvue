@@ -8,23 +8,23 @@
 		<!-- 聊天区 -->
 		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" :style="chatBodyTopAndBottom" :show-scrollbar="false">
 			<block v-for="(item, index) in list" :key="index">
-				<ChatItem ref="chatItem" :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long"></ChatItem>
+				<ChatItem ref="chatItem" :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long" @previewImage="previewImage"></ChatItem>
 			</block>
 		</scroll-view>
 		
 		<!-- 蒙版 -->
-		<view v-if="maskShow" class="position-fixed top-0 left-0 right-0 bg-danger" :style="`z-index: 100; bottom: ${maskBottom}px;`" @click="chatBodyClick"></view>
+		<view v-if="maskShow" class="position-fixed top-0 left-0 right-0" :style="`z-index: 100; bottom: ${maskBottom}px;`" @click="chatBodyClick"></view>
 		
 		<!-- 底部输入框 -->
-		<view class="position-fixed w-100 border-top flex align-center" :style="`background-color: #F7F7F6; height: 105rpx; bottom: ${keyboardHeight}px;`" @click="maskShow = true">
+		<view class="position-fixed w-100 border-top flex align-center" :style="`background-color: #F7F7F6; height: 105rpx; bottom: ${keyboardHeight}px;`">
 			<!-- 语音 -->
 			<IconButton :icon="'\ue6fd'"></IconButton>
 			<!-- 文本输入框 -->
 			<textarea v-model="text" class="flex-1 p-1 font-md" style="height: 75rpx;" fixed :adjust-position="false" @focus="inputHandle" @click="inputHandle"></textarea>
 			<!-- 表情 -->
-			<IconButton :icon="'\ue6fd'"></IconButton>
+			<IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
 			<!-- 扩展菜单 -->
-			<IconButton v-if="text.length === 0" :icon="'\ue6fd'" @click="openAction"></IconButton>
+			<IconButton v-if="text.length === 0" :icon="'\ue6fd'" @click="openActionOrEmoji('action')"></IconButton>
 			<!-- 发送按钮 -->
 			<view v-else class="main-gb-color rounded mr-3 px-2 py-1" @click="send('text')">
 				<text class="font-md text-light">发送</text>
@@ -46,24 +46,16 @@
 			<view class="border-top border-light-secondary" style="height: 580rpx;">
 				<swiper :indicator-dots="true" style="height: 510rpx;">
 					<swiper-item class="row">
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent('uploadImage')"><text class="font-sm text-light-muted">相册</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">拍摄</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">语音通话</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">位置</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">相册</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">拍摄</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">语音通话</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">位置</text></view>
+						<view v-for="(item, index) in renderList" :key="index" class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent(item)">
+							<image v-if="mode === 'emoji'" style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;" :src="item.src" mode="aspectFill"></image>
+							<text class="font-sm text-light-muted">{{item.title}}</text>
+						</view>
 					</swiper-item>
 					<swiper-item class="row">
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">红包</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">语音输入</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">我的收藏</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">名片</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">红包</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">语音输入</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">我的收藏</text></view>
-						<view class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent"><text class="font-sm text-light-muted">名片</text></view>
+						<view v-for="(item, index) in renderList" :key="index" class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent(item)">
+							<image v-if="mode === 'emoji'" style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;" :src="item.src" mode="aspectFill"></image>
+							<text class="font-sm text-light-muted">{{item.title}}</text>
+						</view>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -115,6 +107,14 @@
 			// 蒙版距离底部的高度
 			maskBottom() {
 				return this.keyboardHeight + uni.upx2px(105)
+			},
+			// 获取聊天记录里的所有图片
+			previewImageList() {
+				let arr = []
+				this.list.forEach(item => {
+					if (item.type === 'image' || item.type === 'emoji') arr.push(item.data)
+				})
+				return arr
 			}
 		},
 		data() {
@@ -205,6 +205,83 @@
 						isRemove: true
 					}
 				],
+				actionList: [
+					{
+						title: '相册',
+						type: 'uploadImage'
+					},
+					{
+						title: '拍摄',
+						type: 'action'
+					},
+					{
+						title: '语音通话',
+						type: 'action'
+					},
+					{
+						title: '位置',
+						type: 'action'
+					},
+					{
+						title: '拍摄',
+						type: 'action'
+					},
+					{
+						title: '位置',
+						type: 'action'
+					},
+					{
+						title: '位置',
+						type: 'action'
+					},
+					{
+						title: '位置',
+						type: 'action'
+					}
+				],
+				emojiList: [
+					{
+						title: '表情1',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情2',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情3',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情4',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情5',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情6',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情7',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					},
+					{
+						title: '表情8',
+						type: 'emoji',
+						src: '/static/imgs/1.jpg'
+					}
+				],
+				renderList: [],
 				propIndex: 0, // 当前操作的聊天气泡
 				keyboardHeight: 0, // 底部区域高度(不是底部栏高度，底部栏高度固定 105rpx )
 				text: '',
@@ -216,8 +293,8 @@
 				this.propIndex = index
 				this.$refs.popup.show(x, y);
 			},
-			clickEvent(type) {
-				switch(type) {
+			clickEvent(event) {
+				switch(event) {
 					case 'remove':
 						this.list[this.propIndex].isRemove = true
 						break;
@@ -231,13 +308,15 @@
 				if (lastItem) dom.scrollToElement(lastItem, {})
 				// #endif
 			},
-			send(type) {
+			// 发送消息
+			send(type = 'text', data = '') {
+				// 消息基础结构
 				const obj = {
 					avatar: '/static/userpic/10.jpg',
 					user_id: 1,
 					nickname: '昵称',
 					type: type, // image/audio/video/text/file/share
-					data: this.text,
+					data,
 					createTime: (new Date()).getTime(),
 					isRemove: false
 				}
@@ -246,35 +325,57 @@
 					case 'text':
 						this.list.push(obj)
 						this.text = ''
+					case 'emoji':
+					case 'image':
+						this.list.push(obj)
 				}
 				
 				setTimeout(() => this.scrollChatBodyToBottom(), 100)
 			},
-			// 操作栏打开
-			openAction() {
-				this.mode = 'action'
+			// 操作栏或表情包打开
+			openActionOrEmoji(type) {
+				type === 'action' ? this.mode = 'action' : this.mode = 'emoji'
+				type === 'action' ? this.renderList = this.actionList : this.renderList = this.emojiList
+				this.keyboardHeight = uni.upx2px(580)
 				this.$refs.action.show()
-				uni.hideKeyboard()
+				this.maskShow = true
+				uni.hideKeyboard()			
 			},
-			// 操作栏事件处理
-			actionEvent(type) {
-				switch(type) {
-					case 'uploadImage':
-						console.log('图片上传')
+			// 操作栏或表情包事件处理
+			actionEvent(item) {
+				switch(item.type) {
+					case 'emoji':
+						this.send(item.type, item.src)
 						break
+					case 'uploadImage':
+						uni.chooseImage({
+							count: 9,
+							success: (res) => {
+								// 发送到界面
+								res.tempFilePaths.forEach((path) => {
+									this.send('image', path)
+								})
+							}
+						})
 				}
 			},
 			// 点击输入框
 			inputHandle() {
 				this.mode = 'text'
-				this.maskShow = true
 			},
 			// 蒙版点击关闭底部区域
 			chatBodyClick() {
-				uni.hideKeyboard()
+				this.mode = 'hide'
 				this.keyboardHeight = 0
-				this.$refs.action.hide()
 				this.maskShow = false
+				this.$refs.action.hide()
+				uni.hideKeyboard()
+			},
+			previewImage(url) {
+				uni.previewImage({
+					current: url,
+					urls: this.previewImageList
+				})
 			}
 		},
 		mounted() {
@@ -286,14 +387,12 @@
 			
 			// 监听键盘高度变化(只有APP和微信/腾讯小程序支持)
 			uni.onKeyboardHeightChange(res => {
-				if (this.mode !== 'action') {
+				if (this.mode === 'text') {
+					res.height > 0 ? this.maskShow = true : this.maskShow = false
 					this.keyboardHeight = res.height
-					this.$refs.action.hide()
+					this.$refs.action.hide()					
 				}
-				if (this.mode === 'action') {
-					this.keyboardHeight = uni.upx2px(580)
-				}
-				
+
 				// 把聊天视图拉到最底部
 				if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
 			})

@@ -21,3 +21,5 @@
 19. 接 17 的问题，设置后会发现 `textarea` 就算键盘弹出来了还是会固定在屏幕最底部，此时需要监听键盘高度变化 `uni.onKeyboardHeightChange`
 20. 通过 API 获取的长度值单位都是 px
 21. nvue 中的 `scroll-view` 无法监听 `click` 事件，需要手动加一层蒙版
+22. `uni.chooseImage` 选择图片
+23. nvue 不支持 `max-width` 等属性，不支持 `百分比` 单位
