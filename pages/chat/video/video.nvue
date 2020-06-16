@@ -1,0 +1,46 @@
+<template>
+  <view class="position-relative">
+    <video
+      :src="url"
+      controls
+      auto-play
+      style="width: 750rpx;"
+      :style="'height:' + height + 'px;'"
+      @ended="back"
+    ></video>
+    <view
+      class="position-absolute py-2 px-3"
+      style="top: 30px; left: 30px; background-color: rgba(255, 255, 255, .3);"
+      @click="back"
+    >
+      <text class="font-lg text-white">X</text>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      url: '',
+      height: 500
+    };
+  },
+  onLoad(options) {
+    this.url = options.url
+    // 动态获取高度
+    const res = uni.getSystemInfoSync();
+    this.height = res.windowHeight // 注意返回的是 px
+  },
+  methods: {
+    back() {
+      uni.navigateBack({
+        delta: 1
+      });
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

@@ -22,7 +22,7 @@ export default {
 	},
 	actions: {
 		// 分发
-		$auidoOn({ commit }, event) {
+		$audioOn({ commit }, event) {
 			commit('regEvent', event)
 		},
 		// 执行

@@ -3,7 +3,7 @@
     :src="src"
     :class="imageClass"
     :style="imageSize"
-    @click="emit('click', src)"
+    @click="$emit('click', src)"
     @load="loadImage"
   />
 </template>
@@ -30,13 +30,13 @@
 		},
 		computed: {
 			imageSize() {
-				return `width: ${this.width}rpx; height: ${this.height}rpx;`
+				return `width: ${this.width}px; height: ${this.height}px;`
 			}
 		},
 		data() {
 			return {
-				width: 100,
-				height: 100
+				width: 200,
+				height: 200
 			}
 		},
 		methods: {
@@ -54,6 +54,7 @@
 					this.width = maxWidth
 					this.height = maxWidth * (height / width)
 				}
+				this.$emit('load', { width: this.width, height: this.height })
 			}
 		}
 	}

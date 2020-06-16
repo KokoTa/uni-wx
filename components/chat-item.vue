@@ -21,33 +21,32 @@
       @longpress="longpress"
     >
       <!-- 自己 -->
-      <div v-if="isSelf" :class="labelClass" style="max-width: 500rpx;">
+      <div v-if="isSelf" :class="labelClass" :style="labelStyle">
+        <!-- 文字 -->
         <text v-if="item.type === 'text'" class="font-md">{{ item.data }}</text>
+        <!-- 图片 -->
         <PreviewImage
           v-if="item.type === 'emoji' || item.type === 'image'"
           :src="item.data"
           @click="previewImage"
         ></PreviewImage>
+        <!-- 音频 -->
         <view v-if="item.type === 'audio'" class="flex align-center" @click="openAudio">
-          <text class="font">4'</text>
+          <text class="font">{{item.options.time}}'</text>
           <text v-if="isAudioPlaying">-</text>
+        </view>
+        <!-- 视频 -->
+        <view v-if="item.type === 'video'" class="position-relative rounded">
+          <PreviewImage :src="item.options.poster" @load="loadPoster" @click="openVideo"></PreviewImage>
+          <text class="text-white position-absolute" :style="posterIconStyle">GO</text>
         </view>
       </div>
       <Avatar v-if="isSelf" :src="item.avatar" size="70"></Avatar>
 
       <!-- 别人 -->
       <Avatar v-if="!isSelf" :src="item.avatar" size="70"></Avatar>
-      <div v-if="!isSelf" :class="labelClass" style="max-width: 500rpx;">
+      <div v-if="!isSelf" :class="labelClass" :style="labelStyle">
         <text v-if="item.type === 'text'" class="font-md">{{ item.data }}</text>
-        <PreviewImage
-          v-if="item.type === 'emoji' || item.type === 'image'"
-          :src="item.data"
-          @click="previewImage"
-        ></PreviewImage>
-        <view v-if="item.type === 'audio'" class="flex align-center" @click="openAudio">
-          <text v-if="isAudioPlaying">-</text>
-          <text class="font">4'</text>
-        </view>
       </div>
     </view>
   </view>
@@ -98,12 +97,30 @@ export default {
 		labelClass() {
 			let showLabelClass = (this.item.type === 'text'  || this.item.type === 'audio')
 			return showLabelClass ? (this.isSelf ? 'bg-chat-item p-2 rounded mr-3' : 'bg-white p-2 rounded ml-3') : 'mx-3 rounded'	 
+		},
+		// 语音下的气泡长度
+		labelStyle() {
+			if (this.item.type === 'audio') {
+				const time = this.item.options.time || 0
+				// max 500rpx min 150rpx
+				const width = parseInt(time) / (60 / 500)
+				return `width: ${width < 150 ? 150 : width}rpx;`
+			}
+		},
+		// 播放按钮样式
+		posterIconStyle() {
+			const { top, left } = this.posterIconSize
+			return `top: ${top}px; left: ${left}px;`
 		}
 	},
 	data() {
 		return {
 			innerAudioContext: null,
-			isAudioPlaying: false
+			isAudioPlaying: false,
+			posterIconSize: {
+				top: 0,
+				left: 0
+			}
 		}
 	},
 	methods: {
@@ -161,6 +178,19 @@ export default {
 		globalAudioChecker(index) {
 			// 停止指定索引外的其他音频
 			if (this.innerAudioContext && this.index !== index) this.innerAudioContext.stop()
+		},
+		// 加载封面
+		loadPoster({ width, height }) {
+			this.posterIconSize = {
+				left: width / 2 - 10 ,
+				top: height / 2 - 10
+			}
+		},
+		// 跳转视频播放页
+		openVideo(src) {
+			uni.navigateTo({
+				url: "/pages/chat/video/video?url=" + this.item.data
+			})
 		}
 	},
 	mounted() {

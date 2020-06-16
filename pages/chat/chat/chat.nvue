@@ -33,10 +33,7 @@
     ></view>
 
     <!-- 底部输入框 -->
-    <view
-      class="position-fixed w-100 border-top flex align-center"
-      :style="bottomStyle"
-    >
+    <view class="position-fixed w-100 border-top flex align-center" :style="bottomStyle">
       <!-- 语音 -->
       <IconButton :icon="'\ue6fd'"></IconButton>
       <!-- 文本输入框 -->
@@ -50,38 +47,18 @@
         @click="inputHandle"
       ></textarea>
       <!-- 表情 -->
-      <IconButton
-        :icon="'\ue6fd'"
-        @click="openActionOrEmoji('emoji')"
-      ></IconButton>
+      <IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
       <!-- 扩展菜单 -->
-      <IconButton
-        v-if="text.length === 0"
-        :icon="'\ue6fd'"
-        @click="openActionOrEmoji('action')"
-      ></IconButton>
+      <IconButton v-if="text.length === 0" :icon="'\ue6fd'" @click="openActionOrEmoji('action')"></IconButton>
       <!-- 发送按钮 -->
-      <view
-        v-else
-        class="main-gb-color rounded mr-3 px-2 py-1"
-        @click="send('text')"
-      >
+      <view v-else class="main-gb-color rounded mr-3 px-2 py-1" @click="send('text')">
         <text class="font-md text-light">发送</text>
       </view>
     </view>
 
     <!-- 扩展菜单栏 -->
-    <Popup
-      ref="popup"
-      :bodyWidth="240"
-      :bodyHeight="getMenusHeight"
-      :tabbarHeight="105"
-    >
-      <view
-        class="flex flex-column"
-        style="width: 240rpx;"
-        :style="getMenusSytle"
-      >
+    <Popup ref="popup" :bodyWidth="240" :bodyHeight="getMenusHeight" :tabbarHeight="105">
+      <view class="flex flex-column" style="width: 240rpx;" :style="getMenusSytle">
         <view
           v-for="(item, index) in getMenus"
           class="flex-1 flex align-center pl-3"
@@ -95,12 +72,7 @@
     </Popup>
 
     <!-- 底部弹出栏 -->
-    <Popup
-      ref="action"
-      :fixedBottom="true"
-      transformOrigin="center bottom"
-      :mask="false"
-    >
+    <Popup ref="action" :fixedBottom="true" transformOrigin="center bottom" :mask="false">
       <view class="border-top border-light-secondary" style="height: 580rpx;">
         <swiper :indicator-dots="true" style="height: 510rpx;">
           <swiper-item class="row">
@@ -116,7 +88,7 @@
                 style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;"
                 :src="item.src"
                 mode="aspectFill"
-              ></image>
+              />
               <text class="font-sm text-light-muted">{{ item.title }}</text>
             </view>
           </swiper-item>
@@ -133,7 +105,7 @@
                 style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;"
                 :src="item.src"
                 mode="aspectFill"
-              ></image>
+              />
               <text class="font-sm text-light-muted">{{ item.title }}</text>
             </view>
           </swiper-item>
@@ -301,6 +273,9 @@
             nickname: '昵称',
             type: 'audio', // image/audio/video/text/file/share
             data: '/static/audio/1.mp3',
+            options: {
+              time: 10
+            },
             createTime: 1590472072,
             isRemove: false
           },
@@ -310,6 +285,9 @@
             nickname: '昵称',
             type: 'audio', // image/audio/video/text/file/share
             data: '/static/audio/2.mp3',
+            options: {
+              time: 20
+            },
             createTime: 1590472072,
             isRemove: false
           },
@@ -319,6 +297,21 @@
             nickname: '昵称',
             type: 'audio', // image/audio/video/text/file/share
             data: '/static/audio/3.mp3',
+            options: {
+              time: 30
+            },
+            createTime: 1590472072,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'video', // image/audio/video/text/file/share
+            data: '/static/video/demo.mp4',
+            options: {
+              poster: '/static/video/demo.jpg'
+            },
             createTime: 1590472072,
             isRemove: false
           }
@@ -516,6 +509,8 @@
         // 把聊天视图拉到最底部
         if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
       })
+
+      this.scrollChatBodyToBottom()
     }
   }
 </script>
