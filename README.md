@@ -21,5 +21,6 @@
 19. 接 17 的问题，设置后会发现 `textarea` 就算键盘弹出来了还是会固定在屏幕最底部，此时需要监听键盘高度变化 `uni.onKeyboardHeightChange`
 20. 通过 API 获取的长度值单位都是 px
 21. nvue 中的 `scroll-view` 无法监听 `click` 事件，需要手动加一层蒙版
-22. `uni.chooseImage` 选择图片
-23. nvue 不支持 `max-width` 等属性，不支持 `百分比` 单位
+22. nvue 不支持 `max-width` 等属性，不支持 `百分比` 单位
+23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，这里用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。当然用 `uni.$on` 等 API 可以更方便的实现
+24. 编译小程序时不能在 html 中使用 `模板字符串`，但 js 里可以使用，因此对于 `:style='...'` 的内容要用计算属性来赋值

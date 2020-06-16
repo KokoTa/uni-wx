@@ -1,405 +1,523 @@
 <template>
-	<view>
-		<!-- 导航 -->
-		<NavBar title="王小明" :showBack="true">
-			<IconButton slot="right" :icon="'\ue6fd'"></IconButton>
-		</NavBar>
-		
-		<!-- 聊天区 -->
-		<scroll-view scroll-y class="position-fixed left-0 right-0 px-3" :style="chatBodyTopAndBottom" :show-scrollbar="false">
-			<block v-for="(item, index) in list" :key="index">
-				<ChatItem ref="chatItem" :item="item" :index="index" :preTime="index > 0 ? list[index - 1].createTime : 0" @long="long" @previewImage="previewImage"></ChatItem>
-			</block>
-		</scroll-view>
-		
-		<!-- 蒙版 -->
-		<view v-if="maskShow" class="position-fixed top-0 left-0 right-0" :style="`z-index: 100; bottom: ${maskBottom}px;`" @click="chatBodyClick"></view>
-		
-		<!-- 底部输入框 -->
-		<view class="position-fixed w-100 border-top flex align-center" :style="`background-color: #F7F7F6; height: 105rpx; bottom: ${keyboardHeight}px;`">
-			<!-- 语音 -->
-			<IconButton :icon="'\ue6fd'"></IconButton>
-			<!-- 文本输入框 -->
-			<textarea v-model="text" class="flex-1 p-1 font-md" style="height: 75rpx;" fixed :adjust-position="false" @focus="inputHandle" @click="inputHandle"></textarea>
-			<!-- 表情 -->
-			<IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
-			<!-- 扩展菜单 -->
-			<IconButton v-if="text.length === 0" :icon="'\ue6fd'" @click="openActionOrEmoji('action')"></IconButton>
-			<!-- 发送按钮 -->
-			<view v-else class="main-gb-color rounded mr-3 px-2 py-1" @click="send('text')">
-				<text class="font-md text-light">发送</text>
-			</view>
-		</view>
-		
-		<!-- 扩展菜单栏 -->
-		<Popup ref="popup" :bodyWidth="240" :bodyHeight="getMenusHeight" :tabbarHeight="105">
-			<view class="flex flex-column" style="width: 240rpx;" :style="getMenusSytle">
-				<view v-for="(item, index) in getMenus" class="flex-1 flex align-center pl-3" hover-class="bg-light" :key="index"
-					@click="clickEvent(item.event)">
-					<text class="font-md">{{ item.name }}</text>
-				</view>
-			</view>
-		</Popup>
-		
-		<!-- 底部弹出栏 -->
-		<Popup ref="action" :fixedBottom="true" transformOrigin="center bottom" :mask="false">
-			<view class="border-top border-light-secondary" style="height: 580rpx;">
-				<swiper :indicator-dots="true" style="height: 510rpx;">
-					<swiper-item class="row">
-						<view v-for="(item, index) in renderList" :key="index" class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent(item)">
-							<image v-if="mode === 'emoji'" style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;" :src="item.src" mode="aspectFill"></image>
-							<text class="font-sm text-light-muted">{{item.title}}</text>
-						</view>
-					</swiper-item>
-					<swiper-item class="row">
-						<view v-for="(item, index) in renderList" :key="index" class="col-3 flex flex-column align-center justify-center" style="height: 255rpx;" @click="actionEvent(item)">
-							<image v-if="mode === 'emoji'" style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;" :src="item.src" mode="aspectFill"></image>
-							<text class="font-sm text-light-muted">{{item.title}}</text>
-						</view>
-					</swiper-item>
-				</swiper>
-			</view>
-		</Popup>
-		
-	</view>
+  <view>
+    <!-- 导航 -->
+    <NavBar title="王小明" :showBack="true">
+      <IconButton slot="right" :icon="'\ue6fd'"></IconButton>
+    </NavBar>
+
+    <!-- 聊天区 -->
+    <scroll-view
+      scroll-y
+      class="position-fixed left-0 right-0 px-3"
+      :style="chatBodyTopAndBottom"
+      :show-scrollbar="false"
+    >
+      <block v-for="(item, index) in list" :key="index">
+        <ChatItem
+          ref="chatItem"
+          :item="item"
+          :index="index"
+          :preTime="index > 0 ? list[index - 1].createTime : 0"
+          @long="long"
+          @previewImage="previewImage"
+        ></ChatItem>
+      </block>
+    </scroll-view>
+
+    <!-- 蒙版 -->
+    <view
+      v-if="maskShow"
+      class="position-fixed top-0 left-0 right-0"
+      :style="maskStyle"
+      @click="chatBodyClick"
+    ></view>
+
+    <!-- 底部输入框 -->
+    <view
+      class="position-fixed w-100 border-top flex align-center"
+      :style="bottomStyle"
+    >
+      <!-- 语音 -->
+      <IconButton :icon="'\ue6fd'"></IconButton>
+      <!-- 文本输入框 -->
+      <textarea
+        v-model="text"
+        class="flex-1 p-1 font-md"
+        style="height: 75rpx;"
+        fixed
+        :adjust-position="false"
+        @focus="inputHandle"
+        @click="inputHandle"
+      ></textarea>
+      <!-- 表情 -->
+      <IconButton
+        :icon="'\ue6fd'"
+        @click="openActionOrEmoji('emoji')"
+      ></IconButton>
+      <!-- 扩展菜单 -->
+      <IconButton
+        v-if="text.length === 0"
+        :icon="'\ue6fd'"
+        @click="openActionOrEmoji('action')"
+      ></IconButton>
+      <!-- 发送按钮 -->
+      <view
+        v-else
+        class="main-gb-color rounded mr-3 px-2 py-1"
+        @click="send('text')"
+      >
+        <text class="font-md text-light">发送</text>
+      </view>
+    </view>
+
+    <!-- 扩展菜单栏 -->
+    <Popup
+      ref="popup"
+      :bodyWidth="240"
+      :bodyHeight="getMenusHeight"
+      :tabbarHeight="105"
+    >
+      <view
+        class="flex flex-column"
+        style="width: 240rpx;"
+        :style="getMenusSytle"
+      >
+        <view
+          v-for="(item, index) in getMenus"
+          class="flex-1 flex align-center pl-3"
+          hover-class="bg-light"
+          :key="index"
+          @click="clickEvent(item.event)"
+        >
+          <text class="font-md">{{ item.name }}</text>
+        </view>
+      </view>
+    </Popup>
+
+    <!-- 底部弹出栏 -->
+    <Popup
+      ref="action"
+      :fixedBottom="true"
+      transformOrigin="center bottom"
+      :mask="false"
+    >
+      <view class="border-top border-light-secondary" style="height: 580rpx;">
+        <swiper :indicator-dots="true" style="height: 510rpx;">
+          <swiper-item class="row">
+            <view
+              v-for="(item, index) in renderList"
+              :key="index"
+              class="col-3 flex flex-column align-center justify-center"
+              style="height: 255rpx;"
+              @click="actionEvent(item)"
+            >
+              <image
+                v-if="mode === 'emoji'"
+                style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;"
+                :src="item.src"
+                mode="aspectFill"
+              ></image>
+              <text class="font-sm text-light-muted">{{ item.title }}</text>
+            </view>
+          </swiper-item>
+          <swiper-item class="row">
+            <view
+              v-for="(item, index) in renderList"
+              :key="index"
+              class="col-3 flex flex-column align-center justify-center"
+              style="height: 255rpx;"
+              @click="actionEvent(item)"
+            >
+              <image
+                v-if="mode === 'emoji'"
+                style="height: 150rpx; width: 150rpx; margin-bottom: 10rpx;"
+                :src="item.src"
+                mode="aspectFill"
+              ></image>
+              <text class="font-sm text-light-muted">{{ item.title }}</text>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </Popup>
+  </view>
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar.vue';
-	import IconButton from '@/components/icon-button.vue'
-	import Avatar from '@/components/avatar.vue'
-	import ChatItem from '@/components/chat-item.vue'
-	import Popup from '@/components/popup.vue'
-	
-	// #ifdef APP-PLUS-NVUE
-	const dom = weex.requireModule('dom')
-	// #endif
-	
-	export default {
-		components: {
-			NavBar,
-			IconButton,
-			Avatar,
-			ChatItem,
-			Popup
-		},
-		computed: {
-			getMenusHeight() {
-				const H = 100
-				return this.menus.length * H
-			},
-			getMenusSytle() {
-				return `height: ${this.getMenusHeight}rpx`
-			},
-			isSelf() {
-				const myId = 1
-				const userId = this.propIndex > -1 ? this.list[this.propIndex].user_id : 0
-				return myId === userId
-			},
-			getMenus() {
-				// 别人的气泡信息不能撤回，要排除
-				return this.menus.filter((item) => !(item.name === '撤回' && !this.isSelf))
-			},
-			// 聊天区域 bottom(键盘顶起后，聊天内容区域也要相应改变)
-			chatBodyTopAndBottom() {
-				return `top: ${this.navBarHeight}px; bottom: ${this.keyboardHeight + uni.upx2px(105)}px;`
-			},
-			// 蒙版距离底部的高度
-			maskBottom() {
-				return this.keyboardHeight + uni.upx2px(105)
-			},
-			// 获取聊天记录里的所有图片
-			previewImageList() {
-				let arr = []
-				this.list.forEach(item => {
-					if (item.type === 'image' || item.type === 'emoji') arr.push(item.data)
-				})
-				return arr
-			}
-		},
-		data() {
-			return {
-				// 底部弹出栏模式：text/emotion/action/audio
-				mode: 'text',
-				statusBarHeight: 0,
-				navBarHeight: 0,
-				menus: [
-					{
-						name: '复制',
-						event: 'setTop'
-					},
-					{
-						name: '发送给朋友',
-						event: 'delChat'
-					},
-					{
-						name: '收藏',
-						event: 'delChat'
-					},
-					{
-						name: '删除',
-						event: 'delChat'
-					},
-					{
-						name: '多选',
-						event: 'delChat'
-					},
-					{
-						name: '撤回',
-						event: 'remove'
-					}
-				],
-				list: [
-					{
-						avatar: '/static/userpic/10.jpg',
-						user_id: 1,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好1',
-						createTime: 1590472772,
-						isRemove: false
-					},
-					{
-						avatar: '/static/userpic/11.jpg',
-						user_id: 2,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好2',
-						createTime: 1590472572,
-						isRemove: false
-					},
-					{
-						avatar: '/static/userpic/10.jpg',
-						user_id: 1,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好1',
-						createTime: 1590472472,
-						isRemove: false
-					},
-					{
-						avatar: '/static/userpic/11.jpg',
-						user_id: 2,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好2',
-						createTime: 1590472072,
-						isRemove: false
-					},
-					{
-						avatar: '/static/userpic/10.jpg',
-						user_id: 1,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好1',
-						createTime: 1590472472,
-						isRemove: false
-					},
-					{
-						avatar: '/static/userpic/11.jpg',
-						user_id: 2,
-						nickname: '昵称',
-						type: 'text', // image/audio/video/text/file/share
-						data: '你好2',
-						createTime: 1590472072,
-						isRemove: true
-					}
-				],
-				actionList: [
-					{
-						title: '相册',
-						type: 'uploadImage'
-					},
-					{
-						title: '拍摄',
-						type: 'action'
-					},
-					{
-						title: '语音通话',
-						type: 'action'
-					},
-					{
-						title: '位置',
-						type: 'action'
-					},
-					{
-						title: '拍摄',
-						type: 'action'
-					},
-					{
-						title: '位置',
-						type: 'action'
-					},
-					{
-						title: '位置',
-						type: 'action'
-					},
-					{
-						title: '位置',
-						type: 'action'
-					}
-				],
-				emojiList: [
-					{
-						title: '表情1',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情2',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情3',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情4',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情5',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情6',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情7',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					},
-					{
-						title: '表情8',
-						type: 'emoji',
-						src: '/static/imgs/1.jpg'
-					}
-				],
-				renderList: [],
-				propIndex: 0, // 当前操作的聊天气泡
-				keyboardHeight: 0, // 底部区域高度(不是底部栏高度，底部栏高度固定 105rpx )
-				text: '',
-				maskShow: false
-			}
-		},
-		methods: {
-			long({ x, y, index }) {
-				this.propIndex = index
-				this.$refs.popup.show(x, y);
-			},
-			clickEvent(event) {
-				switch(event) {
-					case 'remove':
-						this.list[this.propIndex].isRemove = true
-						break;
-				}
-				this.$refs.popup.hide()
-			},
-			// 聊天区域滚动到底部
-			scrollChatBodyToBottom() {
-				// #ifdef APP-PLUS-NVUE
-				const lastItem = this.$refs.chatItem[this.$refs.chatItem.length - 1]
-				if (lastItem) dom.scrollToElement(lastItem, {})
-				// #endif
-			},
-			// 发送消息
-			send(type = 'text', data = '') {
-				// 消息基础结构
-				const obj = {
-					avatar: '/static/userpic/10.jpg',
-					user_id: 1,
-					nickname: '昵称',
-					type: type, // image/audio/video/text/file/share
-					data,
-					createTime: (new Date()).getTime(),
-					isRemove: false
-				}
-				
-				switch(type) {
-					case 'text':
-						this.list.push(obj)
-						this.text = ''
-					case 'emoji':
-					case 'image':
-						this.list.push(obj)
-				}
-				
-				setTimeout(() => this.scrollChatBodyToBottom(), 100)
-			},
-			// 操作栏或表情包打开
-			openActionOrEmoji(type) {
-				type === 'action' ? this.mode = 'action' : this.mode = 'emoji'
-				type === 'action' ? this.renderList = this.actionList : this.renderList = this.emojiList
-				this.keyboardHeight = uni.upx2px(580)
-				this.$refs.action.show()
-				this.maskShow = true
-				uni.hideKeyboard()			
-			},
-			// 操作栏或表情包事件处理
-			actionEvent(item) {
-				switch(item.type) {
-					case 'emoji':
-						this.send(item.type, item.src)
-						break
-					case 'uploadImage':
-						uni.chooseImage({
-							count: 9,
-							success: (res) => {
-								// 发送到界面
-								res.tempFilePaths.forEach((path) => {
-									this.send('image', path)
-								})
-							}
-						})
-				}
-			},
-			// 点击输入框
-			inputHandle() {
-				this.mode = 'text'
-			},
-			// 蒙版点击关闭底部区域
-			chatBodyClick() {
-				this.mode = 'hide'
-				this.keyboardHeight = 0
-				this.maskShow = false
-				this.$refs.action.hide()
-				uni.hideKeyboard()
-			},
-			previewImage(url) {
-				uni.previewImage({
-					current: url,
-					urls: this.previewImageList
-				})
-			}
-		},
-		mounted() {
-			// #ifdef APP-PLUS-NVUE
-			// 获取手机顶部 bar 的高度(包含信号啊、wifi啊的那个 bar)
-			this.statusBarHeight = plus.navigator.getStatusbarHeight(); 
-			// #endif
-			this.navBarHeight = this.statusBarHeight + uni.upx2px(90);
-			
-			// 监听键盘高度变化(只有APP和微信/腾讯小程序支持)
-			uni.onKeyboardHeightChange(res => {
-				if (this.mode === 'text') {
-					res.height > 0 ? this.maskShow = true : this.maskShow = false
-					this.keyboardHeight = res.height
-					this.$refs.action.hide()					
-				}
+  import NavBar from '@/components/nav-bar.vue'
+  import IconButton from '@/components/icon-button.vue'
+  import Avatar from '@/components/avatar.vue'
+  import ChatItem from '@/components/chat-item.vue'
+  import Popup from '@/components/popup.vue'
 
-				// 把聊天视图拉到最底部
-				if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
-			})
-		}
-	}
+  // #ifdef APP-PLUS-NVUE
+  const dom = weex.requireModule('dom')
+  // #endif
+
+  export default {
+    components: {
+      NavBar,
+      IconButton,
+      Avatar,
+      ChatItem,
+      Popup
+    },
+    computed: {
+      getMenusHeight() {
+        const H = 100
+        return this.menus.length * H
+      },
+      getMenusSytle() {
+        return `height: ${this.getMenusHeight}rpx`
+      },
+      isSelf() {
+        const myId = 1
+        const userId =
+          this.propIndex > -1 ? this.list[this.propIndex].user_id : 0
+        return myId === userId
+      },
+      getMenus() {
+        // 别人的气泡信息不能撤回，要排除
+        return this.menus.filter(
+          (item) => !(item.name === '撤回' && !this.isSelf)
+        )
+      },
+      // 聊天区域 bottom(键盘顶起后，聊天内容区域也要相应改变)
+      chatBodyTopAndBottom() {
+        return `top: ${this.navBarHeight}px; bottom: ${
+          this.keyboardHeight + uni.upx2px(105)
+        }px;`
+      },
+      // 蒙版距离底部的高度
+      maskBottom() {
+        return this.keyboardHeight + uni.upx2px(105)
+      },
+      maskStyle() {
+        return `z-index: 100; bottom: ${this.maskBottom}px;`
+      },
+      bottomStyle() {
+        return `background-color: #F7F7F6; height: 105rpx; bottom: ${this.keyboardHeight}px;`
+      },
+      // 获取聊天记录里的所有图片
+      previewImageList() {
+        let arr = []
+        this.list.forEach((item) => {
+          if (item.type === 'image' || item.type === 'emoji')
+            arr.push(item.data)
+        })
+        return arr
+      }
+    },
+    data() {
+      return {
+        // 底部弹出栏模式：text/emotion/action/audio
+        mode: 'text',
+        statusBarHeight: 0,
+        navBarHeight: 0,
+        menus: [
+          {
+            name: '复制',
+            event: 'setTop'
+          },
+          {
+            name: '发送给朋友',
+            event: 'delChat'
+          },
+          {
+            name: '收藏',
+            event: 'delChat'
+          },
+          {
+            name: '删除',
+            event: 'delChat'
+          },
+          {
+            name: '多选',
+            event: 'delChat'
+          },
+          {
+            name: '撤回',
+            event: 'remove'
+          }
+        ],
+        list: [
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好1',
+            createTime: 1590472772,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/11.jpg',
+            user_id: 2,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好2',
+            createTime: 1590472572,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好1',
+            createTime: 1590472472,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/11.jpg',
+            user_id: 2,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好2',
+            createTime: 1590472072,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好1',
+            createTime: 1590472472,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/11.jpg',
+            user_id: 2,
+            nickname: '昵称',
+            type: 'text', // image/audio/video/text/file/share
+            data: '你好2',
+            createTime: 1590472072,
+            isRemove: true
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'audio', // image/audio/video/text/file/share
+            data: '/static/audio/1.mp3',
+            createTime: 1590472072,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'audio', // image/audio/video/text/file/share
+            data: '/static/audio/2.mp3',
+            createTime: 1590472072,
+            isRemove: false
+          },
+          {
+            avatar: '/static/userpic/10.jpg',
+            user_id: 1,
+            nickname: '昵称',
+            type: 'audio', // image/audio/video/text/file/share
+            data: '/static/audio/3.mp3',
+            createTime: 1590472072,
+            isRemove: false
+          }
+        ],
+        actionList: [
+          {
+            title: '相册',
+            type: 'uploadImage'
+          },
+          {
+            title: '拍摄',
+            type: 'action'
+          },
+          {
+            title: '语音通话',
+            type: 'action'
+          },
+          {
+            title: '位置',
+            type: 'action'
+          },
+          {
+            title: '拍摄',
+            type: 'action'
+          },
+          {
+            title: '位置',
+            type: 'action'
+          },
+          {
+            title: '位置',
+            type: 'action'
+          },
+          {
+            title: '位置',
+            type: 'action'
+          }
+        ],
+        emojiList: [
+          {
+            title: '表情1',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情2',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情3',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情4',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情5',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情6',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情7',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          },
+          {
+            title: '表情8',
+            type: 'emoji',
+            src: '/static/imgs/1.jpg'
+          }
+        ],
+        renderList: [],
+        propIndex: 0, // 当前操作的聊天气泡
+        keyboardHeight: 0, // 底部区域高度(不是底部栏高度，底部栏高度固定 105rpx )
+        text: '',
+        maskShow: false
+      }
+    },
+    methods: {
+      long({ x, y, index }) {
+        this.propIndex = index
+        this.$refs.popup.show(x, y)
+      },
+      clickEvent(event) {
+        switch (event) {
+          case 'remove':
+            this.list[this.propIndex].isRemove = true
+            break
+        }
+        this.$refs.popup.hide()
+      },
+      // 聊天区域滚动到底部
+      scrollChatBodyToBottom() {
+        // #ifdef APP-PLUS-NVUE
+        const lastItem = this.$refs.chatItem[this.$refs.chatItem.length - 1]
+        if (lastItem) dom.scrollToElement(lastItem, {})
+        // #endif
+      },
+      // 发送消息
+      send(type = 'text', data = '') {
+        // 消息基础结构
+        const obj = {
+          avatar: '/static/userpic/10.jpg',
+          user_id: 1,
+          nickname: '昵称',
+          type: type, // image/audio/video/text/file/share
+          data,
+          createTime: new Date().getTime(),
+          isRemove: false
+        }
+
+        switch (type) {
+          case 'text':
+            this.list.push(obj)
+            this.text = ''
+          case 'emoji':
+          case 'image':
+            this.list.push(obj)
+        }
+
+        setTimeout(() => this.scrollChatBodyToBottom(), 100)
+      },
+      // 操作栏或表情包打开
+      openActionOrEmoji(type) {
+        type === 'action' ? (this.mode = 'action') : (this.mode = 'emoji')
+        type === 'action'
+          ? (this.renderList = this.actionList)
+          : (this.renderList = this.emojiList)
+        this.keyboardHeight = uni.upx2px(580)
+        this.$refs.action.show()
+        this.maskShow = true
+        uni.hideKeyboard()
+      },
+      // 操作栏或表情包事件处理
+      actionEvent(item) {
+        switch (item.type) {
+          case 'emoji':
+            this.send(item.type, item.src)
+            break
+          case 'uploadImage':
+            uni.chooseImage({
+              count: 9,
+              success: (res) => {
+                // 发送到界面
+                res.tempFilePaths.forEach((path) => {
+                  this.send('image', path)
+                })
+              }
+            })
+        }
+      },
+      // 点击输入框
+      inputHandle() {
+        this.mode = 'text'
+      },
+      // 蒙版点击关闭底部区域
+      chatBodyClick() {
+        this.mode = 'hide'
+        this.keyboardHeight = 0
+        this.maskShow = false
+        this.$refs.action.hide()
+        uni.hideKeyboard()
+      },
+      previewImage(url) {
+        uni.previewImage({
+          current: url,
+          urls: this.previewImageList
+        })
+      }
+    },
+    mounted() {
+      // #ifdef APP-PLUS-NVUE
+      // 获取手机顶部 bar 的高度(包含信号啊、wifi啊的那个 bar)
+      this.statusBarHeight = plus.navigator.getStatusbarHeight()
+      // #endif
+      this.navBarHeight = this.statusBarHeight + uni.upx2px(90)
+
+      // 监听键盘高度变化(只有APP和微信/腾讯小程序支持)
+      uni.onKeyboardHeightChange((res) => {
+        if (this.mode === 'text') {
+          res.height > 0 ? (this.maskShow = true) : (this.maskShow = false)
+          this.keyboardHeight = res.height
+          this.$refs.action.hide()
+        }
+
+        // 把聊天视图拉到最底部
+        if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
+      })
+    }
+  }
 </script>
 
-<style>
-
-</style>
+<style></style>
