@@ -35,9 +35,10 @@
     <!-- 底部输入框 -->
     <view class="position-fixed w-100 border-top flex align-center" :style="bottomStyle">
       <!-- 语音 -->
-      <IconButton :icon="'\ue6fd'"></IconButton>
+      <IconButton :icon="'\ue6fd'" @click="toggleInputType"></IconButton>
       <!-- 文本输入框 -->
       <textarea
+        v-if="mode !== 'audio'"
         v-model="text"
         class="flex-1 p-1 font-md"
         style="height: 75rpx;"
@@ -46,6 +47,14 @@
         @focus="inputHandle"
         @click="inputHandle"
       ></textarea>
+      <!-- 录音按钮 -->
+      <view
+        v-if="mode === 'audio'"
+        class="rounded flex align-center justify-center flex-1"
+        style="height: 80rpx;"
+      >
+        <text class="font">按 住 说 话</text>
+      </view>
       <!-- 表情 -->
       <IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
       <!-- 扩展菜单 -->
@@ -489,6 +498,11 @@
           current: url,
           urls: this.previewImageList
         })
+      },
+      toggleInputType() {
+        this.mode !== 'audio' ?
+        this.mode = 'audio' :
+        this.mode = 'text'
       }
     },
     mounted() {
