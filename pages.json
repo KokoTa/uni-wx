@@ -24,6 +24,10 @@
     {
       "path": "pages/chat/video/video",
       "style": {}
+    },
+    {
+      "path": "pages/chat/chat-set/chat-set",
+      "style": {}
     }
   ],
   "globalStyle": {

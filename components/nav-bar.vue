@@ -1,48 +1,63 @@
 <template>
-	<!-- 导航栏 -->
-	<view>
-		<!-- 导航栏固定 -->
-		<view class="bg-light" :class="getClass">
-			<!-- 状态栏 -->
-			<view :style="'height:' + appStatusBarHeight +'px'"></view>
-			<!-- 导航 -->
-			<view class="w-100 flex align-center justify-between" style="height: 90rpx;">
-				<!-- 左侧 -->
-				<view class="flex align-center ml-3">
-					<!-- 返回 -->
-					<IconButton v-if="showBack" :icon="'\ue60d'" @click="back"></IconButton>
-					<!-- 标题 -->
-					<text class="font-md">{{ getTitle }}</text>
-				</view>
-				<!-- 右侧 -->
-				<view class="flex align-center">
-					<slot name="right">
-						<!-- 搜索按钮 -->
-						<IconButton :icon="'\ue6e3'" @click="search"></IconButton>
-						<!-- 添加按钮 -->
-						<IconButton :icon="'\ue682'" @click="openExtend"></IconButton>
-					</slot>
-				</view>
-			</view>
-			<!-- 扩展菜单栏 -->
-			<Popup ref="popup" :bodyWidth="320" :bodyHeight="525" bodyBgClass="bg-dark" transformOrigin="right top">
-				<view class="flex flex-column" style="width: 320rpx; height: 525rpx;" :style="getMenusSytle">
-					<view v-for="(item, index) in menus" class="flex-1 flex align-center" hover-class="bg-hover-dark" :key="index">
-						<text class="iconfont font-md pl-3 pr-2 text-white">{{ item.icon }}</text>
-						<text class="font-md text-white">{{ item.name }}</text>
-					</view>
-				</view>
-			</Popup>
-		</view>
-		<!-- 导航栏占位 -->
-		<view v-if="fixed" :style="barHeightStyle"></view>
-	</view>
+  <!-- 导航栏 -->
+  <view>
+    <!-- 导航栏固定 -->
+    <view class="bg-light" :class="getClass">
+      <!-- 状态栏 -->
+      <view :style="'height:' + appStatusBarHeight +'px'"></view>
+      <!-- 导航 -->
+      <view class="w-100 flex align-center justify-between" style="height: 90rpx;">
+        <!-- 左侧 -->
+        <view class="flex align-center ml-3">
+          <!-- 返回 -->
+          <IconButton v-if="showBack" :icon="'\ue60d'" @click="back"></IconButton>
+          <!-- 标题 -->
+          <text class="font-md">{{ getTitle }}</text>
+        </view>
+        <!-- 右侧 -->
+        <view v-if="showRight" class="flex align-center">
+          <slot name="right">
+            <!-- 搜索按钮 -->
+            <IconButton :icon="'\ue6e3'" @click="search"></IconButton>
+            <!-- 添加按钮 -->
+            <IconButton :icon="'\ue682'" @click="openExtend"></IconButton>
+          </slot>
+        </view>
+      </view>
+      <!-- 扩展菜单栏 -->
+      <Popup
+        ref="popup"
+        :bodyWidth="320"
+        :bodyHeight="525"
+        bodyBgClass="bg-dark"
+        transformOrigin="right top"
+      >
+        <view
+          class="flex flex-column"
+          style="width: 320rpx; height: 525rpx;"
+          :style="getMenusSytle"
+        >
+          <view
+            v-for="(item, index) in menus"
+            class="flex-1 flex align-center"
+            hover-class="bg-hover-dark"
+            :key="index"
+          >
+            <text class="iconfont font-md pl-3 pr-2 text-white">{{ item.icon }}</text>
+            <text class="font-md text-white">{{ item.name }}</text>
+          </view>
+        </view>
+      </Popup>
+    </view>
+    <!-- 导航栏占位 -->
+    <view v-if="fixed" :style="barHeightStyle"></view>
+  </view>
 </template>
 
 <script>
 	import IconButton from "@/components/icon-button.vue"
 	import Popup from "@/components/popup.vue"
-	
+
 	export default {
 		props: {
 			title: {
@@ -64,6 +79,10 @@
 			showBack: {
 				type: Boolean,
 				default: false
+			},
+			showRight: {
+				type: Boolean,
+				default: true
 			}
 		},
 		components: {
@@ -140,5 +159,4 @@
 </script>
 
 <style>
-
 </style>

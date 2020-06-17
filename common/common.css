@@ -1,27 +1,27 @@
 /* 页面背景色 */
 .page {
-	background-color: #EDEDED;
-	
-	/* #ifdef APP-PLUS-NVUE */
-	flex: 1;
-	/* #endif */
-	
-	/* #ifndef APP-PLUS-NVUE */
-	min-height: 100%;
-	height: auto;
-	/* #endif */
+  background-color: #ededed;
+
+  /* #ifdef APP-PLUS-NVUE */
+  flex: 1;
+  /* #endif */
+
+  /* #ifndef APP-PLUS-NVUE */
+  min-height: 100%;
+  height: auto;
+  /* #endif */
 }
 
 /* 主背景色 */
 .main-gb-color {
-	background-color: #08C060;
+  background-color: #08c060;
 }
 
 /* 主字体色 */
 .main-font-color {
-	color: #08C060;
+  color: #08c060;
 }
 /* 聊天背景色 */
 .bg-chat-item {
-	background-color: #6BEE68;
+  background-color: #6bee68;
 }

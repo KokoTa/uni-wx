@@ -2,7 +2,7 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
-			
+
 			// #ifdef APP-PLUS-NVUE
 			// 全局加载图标
 			const domModule = weex.requireModule('dom')
@@ -22,11 +22,11 @@
 </script>
 
 <style>
-	/*每个页面公共css */
-	@import url("./common/free.css");
-	@import url("./common/common.css");
+/*每个页面公共css */
+@import url("./common/free.css");
+@import url("./common/common.css");
 
-	/* #ifndef APP-PLUS-NVUE */
-	@import url("./common/icon.css");
-	/* #endif */
+/* #ifndef APP-PLUS-NVUE */
+@import url("./common/icon.css");
+/* #endif */
 </style>

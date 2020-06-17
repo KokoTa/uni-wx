@@ -138,7 +138,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _D_A
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(__f__) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n{\n  onLaunch: function onLaunch() {\n    __f__(\"log\", 'App Launch', \" at App.vue:4\");\n\n\n    // 全局加载图标\n    var domModule = weex.requireModule('dom');\n    domModule.addRule('fontFace', {\n      'fontFamily': 'iconfont',\n      'src': \"url('https://at.alicdn.com/t/font_1365296_vumpzwvr0z.ttf')\" });\n\n\n  },\n  onShow: function onShow() {\n    __f__(\"log\", 'App Show', \" at App.vue:16\");\n  },\n  onHide: function onHide() {\n    __f__(\"log\", 'App Hide', \" at App.vue:19\");\n  } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/lib/format-log.js */ 6)[\"default\"]))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVuaS1hcHA6Ly8vQXBwLnZ1ZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7QUFDQTtBQUNBOzs7QUFHQTtBQUNBO0FBQ0E7QUFDQSw4QkFEQTtBQUVBLHlFQUZBOzs7QUFLQSxHQVpBO0FBYUE7QUFDQTtBQUNBLEdBZkE7QUFnQkE7QUFDQTtBQUNBLEdBbEJBLEUiLCJmaWxlIjoiNS5qcyIsInNvdXJjZXNDb250ZW50IjpbIjxzY3JpcHQ+XHJcblx0ZXhwb3J0IGRlZmF1bHQge1xyXG5cdFx0b25MYXVuY2g6IGZ1bmN0aW9uKCkge1xyXG5cdFx0XHRjb25zb2xlLmxvZygnQXBwIExhdW5jaCcpXHJcblx0XHRcdFxyXG5cdFx0XHQvLyAjaWZkZWYgQVBQLVBMVVMtTlZVRVxyXG5cdFx0XHQvLyDlhajlsYDliqDovb3lm77moIdcclxuXHRcdFx0Y29uc3QgZG9tTW9kdWxlID0gd2VleC5yZXF1aXJlTW9kdWxlKCdkb20nKVxyXG5cdFx0XHRkb21Nb2R1bGUuYWRkUnVsZSgnZm9udEZhY2UnLCB7XHJcblx0XHRcdFx0J2ZvbnRGYW1pbHknOiAnaWNvbmZvbnQnLFxyXG5cdFx0XHRcdCdzcmMnOiBcInVybCgnaHR0cHM6Ly9hdC5hbGljZG4uY29tL3QvZm9udF8xMzY1Mjk2X3Z1bXB6d3ZyMHoudHRmJylcIlxyXG5cdFx0XHR9KVxyXG5cdFx0XHQvLyAjZW5kaWZcclxuXHRcdH0sXHJcblx0XHRvblNob3c6IGZ1bmN0aW9uKCkge1xyXG5cdFx0XHRjb25zb2xlLmxvZygnQXBwIFNob3cnKVxyXG5cdFx0fSxcclxuXHRcdG9uSGlkZTogZnVuY3Rpb24oKSB7XHJcblx0XHRcdGNvbnNvbGUubG9nKCdBcHAgSGlkZScpXHJcblx0XHR9XHJcblx0fVxyXG48L3NjcmlwdD5cclxuXHJcbjxzdHlsZT5cclxuXHQvKuavj+S4qumhtemdouWFrOWFsWNzcyAqL1xyXG5cdEBpbXBvcnQgdXJsKFwiLi9jb21tb24vZnJlZS5jc3NcIik7XHJcblx0QGltcG9ydCB1cmwoXCIuL2NvbW1vbi9jb21tb24uY3NzXCIpO1xyXG5cclxuXHQvKiAjaWZuZGVmIEFQUC1QTFVTLU5WVUUgKi9cclxuXHRAaW1wb3J0IHVybChcIi4vY29tbW9uL2ljb24uY3NzXCIpO1xyXG5cdC8qICNlbmRpZiAqL1xyXG48L3N0eWxlPlxyXG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///5\n");
+eval("/* WEBPACK VAR INJECTION */(function(__f__) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n{\n  onLaunch: function onLaunch() {\n    __f__(\"log\", 'App Launch', \" at App.vue:4\");\n\n\n    // 全局加载图标\n    var domModule = weex.requireModule('dom');\n    domModule.addRule('fontFace', {\n      'fontFamily': 'iconfont',\n      'src': \"url('https://at.alicdn.com/t/font_1365296_vumpzwvr0z.ttf')\" });\n\n\n  },\n  onShow: function onShow() {\n    __f__(\"log\", 'App Show', \" at App.vue:16\");\n  },\n  onHide: function onHide() {\n    __f__(\"log\", 'App Hide', \" at App.vue:19\");\n  } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/lib/format-log.js */ 6)[\"default\"]))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVuaS1hcHA6Ly8vQXBwLnZ1ZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7QUFDQTtBQUNBOzs7QUFHQTtBQUNBO0FBQ0E7QUFDQSw4QkFEQTtBQUVBLHlFQUZBOzs7QUFLQSxHQVpBO0FBYUE7QUFDQTtBQUNBLEdBZkE7QUFnQkE7QUFDQTtBQUNBLEdBbEJBLEUiLCJmaWxlIjoiNS5qcyIsInNvdXJjZXNDb250ZW50IjpbIjxzY3JpcHQ+XHJcblx0ZXhwb3J0IGRlZmF1bHQge1xyXG5cdFx0b25MYXVuY2g6IGZ1bmN0aW9uKCkge1xyXG5cdFx0XHRjb25zb2xlLmxvZygnQXBwIExhdW5jaCcpXHJcblxyXG5cdFx0XHQvLyAjaWZkZWYgQVBQLVBMVVMtTlZVRVxyXG5cdFx0XHQvLyDlhajlsYDliqDovb3lm77moIdcclxuXHRcdFx0Y29uc3QgZG9tTW9kdWxlID0gd2VleC5yZXF1aXJlTW9kdWxlKCdkb20nKVxyXG5cdFx0XHRkb21Nb2R1bGUuYWRkUnVsZSgnZm9udEZhY2UnLCB7XHJcblx0XHRcdFx0J2ZvbnRGYW1pbHknOiAnaWNvbmZvbnQnLFxyXG5cdFx0XHRcdCdzcmMnOiBcInVybCgnaHR0cHM6Ly9hdC5hbGljZG4uY29tL3QvZm9udF8xMzY1Mjk2X3Z1bXB6d3ZyMHoudHRmJylcIlxyXG5cdFx0XHR9KVxyXG5cdFx0XHQvLyAjZW5kaWZcclxuXHRcdH0sXHJcblx0XHRvblNob3c6IGZ1bmN0aW9uKCkge1xyXG5cdFx0XHRjb25zb2xlLmxvZygnQXBwIFNob3cnKVxyXG5cdFx0fSxcclxuXHRcdG9uSGlkZTogZnVuY3Rpb24oKSB7XHJcblx0XHRcdGNvbnNvbGUubG9nKCdBcHAgSGlkZScpXHJcblx0XHR9XHJcblx0fVxyXG48L3NjcmlwdD5cclxuXHJcbjxzdHlsZT5cclxuLyrmr4/kuKrpobXpnaLlhazlhbFjc3MgKi9cclxuQGltcG9ydCB1cmwoXCIuL2NvbW1vbi9mcmVlLmNzc1wiKTtcclxuQGltcG9ydCB1cmwoXCIuL2NvbW1vbi9jb21tb24uY3NzXCIpO1xyXG5cclxuLyogI2lmbmRlZiBBUFAtUExVUy1OVlVFICovXHJcbkBpbXBvcnQgdXJsKFwiLi9jb21tb24vaWNvbi5jc3NcIik7XHJcbi8qICNlbmRpZiAqL1xyXG48L3N0eWxlPlxyXG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///5\n");
 
 /***/ }),
 /* 6 */
@@ -1106,17 +1106,17 @@ module.exports = {
     "bottom": 0
   },
   "page": {
-    "backgroundColor": "#EDEDED",
+    "backgroundColor": "#ededed",
     "flex": 1
   },
   "main-gb-color": {
-    "backgroundColor": "#08C060"
+    "backgroundColor": "#08c060"
   },
   "main-font-color": {
-    "color": "#08C060"
+    "color": "#08c060"
   },
   "bg-chat-item": {
-    "backgroundColor": "#6BEE68"
+    "backgroundColor": "#6bee68"
   }
 }
 

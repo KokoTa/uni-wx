@@ -2,7 +2,7 @@
   <view>
     <!-- 导航 -->
     <NavBar title="王小明" :showBack="true">
-      <IconButton slot="right" :icon="'\ue6fd'"></IconButton>
+      <IconButton slot="right" :icon="'\ue6fd'" @click="openChatSet"></IconButton>
     </NavBar>
 
     <!-- 聊天区 -->
@@ -571,6 +571,12 @@
         // 移动距离超过 20 就显示取消录音
         const diffY = Math.abs(e.changedTouches[0].screenY - this.startY)
         this.isCancelRecord = (diffY >= 20)
+      },
+
+      openChatSet() {
+        uni.navigateTo({
+          url: '/pages/chat/chat-set/chat-set'
+        })
       }
     },
     mounted() {
