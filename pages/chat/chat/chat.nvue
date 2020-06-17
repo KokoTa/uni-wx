@@ -51,9 +51,14 @@
       <view
         v-if="mode === 'audio'"
         class="rounded flex align-center justify-center flex-1"
+        :class="isRecording ? 'bg-hover-light' : ''"
         style="height: 80rpx;"
+        @touchstart="voiceTouchStart"
+        @touchend="voiceTouchEnd"
+        @touchcancel="voiceTouchCancel"
+        @touchmove="voiceTouchMove"
       >
-        <text class="font">按 住 说 话</text>
+        <text class="font">{{ isRecording ? '松 开 结 束' : '按 住 说 话' }}</text>
       </view>
       <!-- 表情 -->
       <IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
@@ -121,6 +126,20 @@
         </swiper>
       </view>
     </Popup>
+
+    <!-- 录音提示框 -->
+    <view
+      v-if="isRecording"
+      class="position-fixed top-0 left-0 right-0 flex align-center justify-center"
+      style="bottom: 105rpx;"
+    >
+      <view
+        style="height: 360rpx; width: 360rpx; background-color: rgba(0, 0, 0, .5);"
+        class="rounded flex align-center justify-center"
+      >
+        <text class="font text-hover-light">{{isCancelRecord ? '松开手指，取消发送' : '手指上滑，取消发送'}}</text>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -134,6 +153,9 @@
   // #ifdef APP-PLUS-NVUE
   const dom = weex.requireModule('dom')
   // #endif
+
+  // 录音管理器
+  const recorderManager = uni.getRecorderManager(); // 其他详细请查看官方文档https://uniapp.dcloud.io/api/media/record-manager
 
   export default {
     components: {
@@ -332,7 +354,7 @@
           },
           {
             title: '拍摄',
-            type: 'action'
+            type: 'uploadVideo'
           },
           {
             title: '语音通话',
@@ -404,8 +426,13 @@
         renderList: [],
         propIndex: 0, // 当前操作的聊天气泡
         keyboardHeight: 0, // 底部区域高度(不是底部栏高度，底部栏高度固定 105rpx )
-        text: '',
-        maskShow: false
+        text: '', // 文本输入框内容
+        maskShow: false, // 是否显示蒙版
+        isRecording: false, // 音频录制状态
+        startY: 0, // 按住说话的起始Y坐标
+        isCancelRecord: false, // 是否取消发送
+        recordTime: 0, // 录音时长
+        recordTimer: null // 录音定时器
       }
     },
     methods: {
@@ -413,6 +440,7 @@
         this.propIndex = index
         this.$refs.popup.show(x, y)
       },
+      // 菜单栏事件处理
       clickEvent(event) {
         switch (event) {
           case 'remove':
@@ -429,7 +457,7 @@
         // #endif
       },
       // 发送消息
-      send(type = 'text', data = '') {
+      send(type = 'text', data = '', options) {
         // 消息基础结构
         const obj = {
           avatar: '/static/userpic/10.jpg',
@@ -437,18 +465,17 @@
           nickname: '昵称',
           type: type, // image/audio/video/text/file/share
           data,
+          options,
           createTime: new Date().getTime(),
           isRemove: false
         }
 
         switch (type) {
           case 'text':
-            this.list.push(obj)
             this.text = ''
-          case 'emoji':
-          case 'image':
-            this.list.push(obj)
         }
+
+        this.list.push(obj)
 
         setTimeout(() => this.scrollChatBodyToBottom(), 100)
       },
@@ -479,6 +506,16 @@
                 })
               }
             })
+          case 'uploadVideo':
+            uni.chooseVideo({
+              maxDuration: 10,
+              success: (res) => {
+                // 发送到界面
+                this.send('video', res.tempFilePath, {
+                  poster: '/static/video/demo.jpg'
+                })
+              }
+            })
         }
       },
       // 点击输入框
@@ -493,16 +530,47 @@
         this.$refs.action.hide()
         uni.hideKeyboard()
       },
+      // 预览图片
       previewImage(url) {
         uni.previewImage({
           current: url,
           urls: this.previewImageList
         })
       },
+      // 语音和文字输入切换
       toggleInputType() {
         this.mode !== 'audio' ?
         this.mode = 'audio' :
         this.mode = 'text'
+      },
+
+      // 音频相关
+      voiceTouchStart(e) {
+        // 录音样式
+        this.isRecording = true
+        this.isCancelRecord = false
+        this.startY = e.changedTouches[0].screenY
+
+        // 开始录音
+        recorderManager.start({
+          format: 'mp3'
+        })
+      },
+      voiceTouchEnd() {
+        this.isRecording = false
+        // 停止录音
+        recorderManager.stop()
+      },
+      voiceTouchCancel() {
+        this.isRecording = false
+        this.isCancelRecord = true
+        // 停止录音
+        recorderManager.stop()
+      },
+      voiceTouchMove(e) {
+        // 移动距离超过 20 就显示取消录音
+        const diffY = Math.abs(e.changedTouches[0].screenY - this.startY)
+        this.isCancelRecord = (diffY >= 20)
       }
     },
     mounted() {
@@ -510,7 +578,7 @@
       // 获取手机顶部 bar 的高度(包含信号啊、wifi啊的那个 bar)
       this.statusBarHeight = plus.navigator.getStatusbarHeight()
       // #endif
-      this.navBarHeight = this.statusBarHeight + uni.upx2px(90)
+      this.navBarHeight = this.statusBarHeight + uni.upx2px(90) // 90 是自定义顶栏的高度
 
       // 监听键盘高度变化(只有APP和微信/腾讯小程序支持)
       uni.onKeyboardHeightChange((res) => {
@@ -524,7 +592,27 @@
         if (this.keyboardHeight > 0) this.scrollChatBodyToBottom()
       })
 
+      // 监听录音开始
+      recorderManager.onStart(() => {
+        this.recordTimer = setInterval(() => {
+          this.recordTime++
+        }, 1000)
+      })
+      // 监听录音结束
+      recorderManager.onStop((e) => {
+        if (!this.isCancelRecord) {
+          this.send('audio', e.tempFilePath, {
+            time: this.recordTime
+          })
+        }
+        this.recordTime = 0
+        clearInterval(this.recordTimer)
+      })
+
       this.scrollChatBodyToBottom()
+    },
+    destroyed() {
+      clearInterval(this.recordTimer)
     }
   }
 </script>

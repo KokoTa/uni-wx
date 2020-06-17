@@ -21,11 +21,11 @@
 			},
 			maxWidth: {
 				type: Number,
-				default: 500
+				default: 200
 			},
 			maxHeight: {
 				type: Number,
-				default: 500
+				default: 200
 			}
 		},
 		computed: {
@@ -50,7 +50,7 @@
 				} else if (height > maxHeight) {
 					this.width = maxHeight * (width / height)
 					this.height = maxHeight
-				} else if (width < maxWidth) {
+				} else if (width > maxWidth) {
 					this.width = maxWidth
 					this.height = maxWidth * (height / width)
 				}

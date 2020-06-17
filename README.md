@@ -22,5 +22,6 @@
 20. 通过 API 获取的长度值单位都是 px
 21. nvue 中的 `scroll-view` 无法监听 `click` 事件，需要手动加一层蒙版
 22. nvue 不支持 `max-width` 等属性，不支持 `百分比` 单位
-23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，这里用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。当然用 `uni.$on` 等 API 可以更方便的实现
+23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，旧版用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。新版可以用 `uni.$on` 等 API 实现
 24. 编译小程序时不能在 html 中使用 `模板字符串`，但 js 里可以使用，因此对于 `:style='...'` 的内容要用计算属性来赋值
+25. `uni.getRecorderManager` 是全局唯一的，旧版需要放到 vuex 中操作，否则会报错，而新版不需要
