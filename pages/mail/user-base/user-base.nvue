@@ -7,8 +7,11 @@
 
     <view class="py-4 px-3 flex align-center bg-white border-bottom">
       <Avatar src="/static/userpic/10.jpg" size="120"></Avatar>
-      <view class="flex flex-column ml-3">
-        <text class="font-lg font-weight-bold mb-1">{{nickName}}</text>
+      <view class="flex flex-column ml-3 flex-1">
+        <view class="flex align-center justify-between mb-1">
+          <text class="font-lg font-weight-bold">{{nickName}}</text>
+          <text v-if="isStar" class="font-lg">⭐</text>
+        </view>
         <text class="font-md text-light-muted">账号：Brain</text>
         <text class="font-md text-light-muted">地区：福建 泉州</text>
       </view>
@@ -41,7 +44,11 @@
     <NormalListItem title="更多信息" :showLeft="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
-    <view class="py-3 flex align-center justify-center bg-white" hover-class="bg-light">
+    <view
+      v-if="!isBlack"
+      class="py-3 flex align-center justify-center bg-white"
+      hover-class="bg-light"
+    >
       <text class="font-md text-primary">发信息</text>
     </view>
 
@@ -91,7 +98,9 @@ export default {
           title: '把他推荐给朋友'
         },
         {
-          title: '设为星标朋友'
+          title: '设为星标朋友',
+          type: 'event',
+          event: 'setStar'
         },
         {
           title: '设置朋友圈和动态权限',
@@ -99,14 +108,18 @@ export default {
           path: '/pages/mail/user-visit-auth/user-visit-auth'
         },
         {
-          title: '加入黑名单'
+          title: '加入黑名单',
+          type: 'event',
+          event: 'setBlack'
         },
         {
           title: '投诉'
         },
       ],
       tagList: [],
-      nickName: '昵称'
+      nickName: '昵称',
+      isStar: false,
+      isBlack: false
     }
   },
   methods: {
@@ -119,15 +132,46 @@ export default {
       })
     },
     popupEvent(e) {
-      const { type, path } = e
+      const { type, path, event } = e
       switch(type) {
         case 'navigate':
           uni.navigateTo({
             url: path
           })
+          break
+        case 'event':
+          this[event](e)
+          break
       }
 
       this.$refs.popup.hide()
+    },
+    setStar(item) {
+      this.isStar = !this.isStar
+      item.title = this.isStar ? '取消星标好友' : '设为星标朋友'
+    },
+    setBlack(item) {
+      let content = '是否加入黑名单？'
+      if (this.isBlack) content = '是否移出黑名单？'
+
+      uni.showModal({
+        content,
+        success: (res) => {
+          if (res.confirm) {
+            this.isBlack = !this.isBlack
+            let title = '已加入黑名单'
+            if (!this.isBlack) title = '已移出黑名单'
+            uni.showToast({
+              title,
+              duration: 1000
+            });
+          }
+
+          let title = '加入黑名单'
+          if (this.isBlack) title = '移出黑名单'
+          item.title = title
+        }
+      });
     }
   },
   onLoad() {
