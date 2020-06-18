@@ -40,6 +40,10 @@
     {
       "path": "pages/mail/user-tag-set/user-tag-set",
       "style": {}
+    },
+    {
+      "path": "pages/mail/user-visit-auth/user-visit-auth",
+      "style": {}
     }
   ],
   "globalStyle": {

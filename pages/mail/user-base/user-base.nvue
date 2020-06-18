@@ -53,6 +53,7 @@
           :title="item.title"
           :key="index"
           :showBorderBottom="false"
+          @click="popupEvent(item)"
         >
           <text slot="icon" class="iconfont font-lg py-1">&#xe66c;</text>
         </NormalListItem>
@@ -82,7 +83,9 @@ export default {
     return {
       actionList: [
         {
-          title: '设置备注和标签'
+          title: '设置备注和标签',
+          type: 'navigate',
+          path: '/pages/mail/user-base/user-base'
         },
         {
           title: '把他推荐给朋友'
@@ -91,7 +94,9 @@ export default {
           title: '设为星标朋友'
         },
         {
-          title: '设置朋友圈和动态权限'
+          title: '设置朋友圈和动态权限',
+          type: 'navigate',
+          path: '/pages/mail/user-visit-auth/user-visit-auth'
         },
         {
           title: '加入黑名单'
@@ -112,6 +117,17 @@ export default {
       uni.navigateTo({
         url: '/pages/' + path
       })
+    },
+    popupEvent(e) {
+      const { type, path } = e
+      switch(type) {
+        case 'navigate':
+          uni.navigateTo({
+            url: path
+          })
+      }
+
+      this.$refs.popup.hide()
     }
   },
   onLoad() {

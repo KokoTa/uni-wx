@@ -1,0 +1,34 @@
+<template>
+  <view>
+    <!-- 导航 -->
+    <NavBar title="设置朋友圈动态权限" :showBack="true" :showRight="false"></NavBar>
+
+    <NormalListItem title="不让他看我朋友圈" :showLeft="false" :showRight="true" :showRightIcon="false">
+      <switch slot="right" checked="true" color="#08C060" />
+    </NormalListItem>
+
+    <NormalListItem title="不看他朋友圈" :showLeft="false" :showRight="true" :showRightIcon="false">
+      <switch slot="right" checked="true" color="#08C060" />
+    </NormalListItem>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import NormalListItem from '@/components/normal-list-item.vue'
+
+export default {
+  components: {
+    NavBar,
+    NormalListItem
+  },
+  data() {
+    return {
+
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

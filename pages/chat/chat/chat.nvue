@@ -470,8 +470,10 @@
           isRemove: false
         }
 
+
         switch (type) {
           case 'text':
+            obj.data = this.text
             this.text = ''
         }
 
