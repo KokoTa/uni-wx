@@ -8,16 +8,25 @@
     <view class="py-4 px-3 flex align-center bg-white border-bottom">
       <Avatar src="/static/userpic/10.jpg" size="120"></Avatar>
       <view class="flex flex-column ml-3">
-        <text class="font-lg font-weight-bold mb-1">昵称</text>
+        <text class="font-lg font-weight-bold mb-1">{{nickName}}</text>
         <text class="font-md text-light-muted">账号：Brain</text>
         <text class="font-md text-light-muted">地区：福建 泉州</text>
       </view>
     </view>
 
-    <NormalListItem :showLeft="false" :showRight="true">
+    <NormalListItem
+      :showLeft="false"
+      :showRight="true"
+      @click="navigate('mail/user-remark-tag/user-remark-tag')"
+    >
       <view slot="left" class="flex align-center">
         <text class="font-md text-dark mr-3">标签</text>
-        <text class="font-md text-muted">哈哈</text>
+        <text
+          v-for="(item, index) in tagList.slice(0, 2)"
+          :key="index"
+          class="font-md text-muted mr-1"
+        >{{item.name}}</text>
+        <text v-if="tagList.length === 0" class="font-md text-muted">未设置</text>
       </view>
     </NormalListItem>
 
@@ -90,13 +99,29 @@ export default {
         {
           title: '投诉'
         },
-      ]
+      ],
+      tagList: [],
+      nickName: '昵称'
     }
   },
   methods: {
     openAction() {
       this.$refs.popup.show()
+    },
+    navigate(path) {
+      uni.navigateTo({
+        url: '/pages/' + path
+      })
     }
+  },
+  onLoad() {
+    uni.$on('saveRemarkTag', (obj) => {
+      this.tagList = obj.tagList
+      this.nickName = obj.nickName
+    })
+  },
+  destroyed() {
+    uni.$off('saveRemarkTag')
   },
 };
 </script>

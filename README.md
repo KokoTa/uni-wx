@@ -4,7 +4,7 @@
 2. 引入自定义 icon 需要使用 weex 的模块加载, icon 必须使用 text 包裹
 3. text 组件不能换行
 4. 设置全屏高度用 `flex: 1`，而非 `min-height: 100%; height: auto;`
-5. 取消原生APP导航 `titleNView: false`
+5. 取消原生 APP 导航 `titleNView: false`
 6. 取消滚动条 `scrollIndicator: "none"`
 7. 只支持 Flex 布局
 8. 获取 APP 状态栏高度 `plus.navigator.getStatusbarHeight()`，动态获取的值单位为 `px`，累加时记得调用 `uni.upx2px()` 转换单位，upx 就是 rpx
@@ -22,6 +22,6 @@
 20. 通过 API 获取的长度值单位都是 px
 21. nvue 中的 `scroll-view` 无法监听 `click` 事件，需要手动加一层蒙版
 22. nvue 不支持 `max-width` 等属性，不支持 `百分比` 单位
-23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，旧版用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。新版可以用 `uni.$on` 等 API 实现
+23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，旧版用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。新版可以用 `uni.$on` 等 API 实现，标签页那边就运用到了该 API
 24. 编译小程序时不能在 html 中使用 `模板字符串`，但 js 里可以使用，因此对于 `:style='...'` 的内容要用计算属性来赋值
 25. `uni.getRecorderManager` 是全局唯一的，旧版需要放到 vuex 中操作，否则会报错，而新版不需要

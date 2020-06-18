@@ -21,6 +21,9 @@
 .main-font-color {
   color: #08c060;
 }
+.main-border-color {
+  border-color: #08c060 !important;
+}
 /* 聊天背景色 */
 .bg-chat-item {
   background-color: #6bee68;

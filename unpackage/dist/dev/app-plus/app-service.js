@@ -1115,6 +1115,9 @@ module.exports = {
   "main-font-color": {
     "color": "#08c060"
   },
+  "main-border-color": {
+    "borderColor": "#08c060"
+  },
   "bg-chat-item": {
     "backgroundColor": "#6bee68"
   }

@@ -1,0 +1,109 @@
+<template>
+  <view class="page">
+    <!-- 导航 -->
+    <NavBar title="添加标签" :showBack="true">
+      <NormalButton slot="right" name="保存" @click="save"></NormalButton>
+    </NavBar>
+
+    <view class="px-3 pt-3 pb-2 border-bottom flex align-center flex-wrap">
+      <!-- 标签 -->
+      <view
+        v-for="(item, index) in tagList"
+        :key="index"
+        class="border main-border-color rounded-circle py-1 px-2 flex align-center justify-center mr-1 mb-1"
+        @click="deleteTag(item)"
+      >
+        <text class="font main-font-color">{{item.name}}</text>
+      </view>
+      <!-- 添加标签 -->
+      <input
+        type="text"
+        class="border bg-white font rounded-circle text-center mb-1"
+        placeholder="添加标签"
+        style="border-style: dashed; width: 180rpx;"
+        v-model="tag"
+        @confirm="addTag"
+        confirm-type="send"
+      />
+    </view>
+
+    <!-- 备选标签 -->
+    <view class="flex flex-column">
+      <text class="font-sm text-secondary px-3 py-2">备选标签</text>
+      <view class="font-md p-3 flex align-center flex-wrap pb-2">
+        <view
+          v-for="(item, index) in backList"
+          :key="index"
+          class="border bg-white main-font-color rounded-circle px-2 py-1 mr-1 mb-1"
+          @click="fastAddTag(item)"
+        >
+          <text class="font text-dark">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import NormalButton from '@/components/normal-button.vue'
+
+export default {
+  components: {
+    NavBar,
+    NormalButton
+  },
+  data() {
+    return {
+      tagList: [],
+      backList: [
+        {
+          name: '卡卡'
+        },
+        {
+          name: '拉拉'
+        }
+      ],
+      tag: ''
+    };
+  },
+  methods: {
+    addTag() {
+      if (!this.tag.length) return uni.showToast({ title: '标签不能为空', duration: 1000, icon: 'none' });
+
+      const index = this.tagList.findIndex((item) => item.name === this.tag)
+      if (index !== -1) return uni.showToast({ title: '标签重复', duration: 1000, icon: 'none' });
+
+      this.tagList.push({
+        name: this.tag
+      })
+      this.tag = ''
+    },
+    fastAddTag(item) {
+      this.tag = item.name
+      this.addTag()
+    },
+    deleteTag(target) {
+      const index = this.tagList.findIndex((item) => item.name === target.name)
+      if (index !== -1) this.tagList.splice(index, 1)
+    },
+    save() {
+      uni.navigateBack({
+        delta: 1
+      })
+      uni.$emit('updateTag', this.tagList)
+    }
+  },
+  onLoad(options) {
+    if (options.detail) {
+      this.tagList = JSON.parse(options.detail)
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>
+
+
+
