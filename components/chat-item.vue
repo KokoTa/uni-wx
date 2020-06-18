@@ -41,10 +41,10 @@
           <text class="text-white position-absolute" :style="posterIconStyle">GO</text>
         </view>
       </div>
-      <Avatar v-if="isSelf" :src="item.avatar" size="70"></Avatar>
+      <Avatar v-if="isSelf" :src="item.avatar" size="70" clickType="navigate"></Avatar>
 
       <!-- 别人 -->
-      <Avatar v-if="!isSelf" :src="item.avatar" size="70"></Avatar>
+      <Avatar v-if="!isSelf" :src="item.avatar" size="70" clickType="navigate"></Avatar>
       <div v-if="!isSelf" :class="labelClass" :style="labelStyle">
         <text v-if="item.type === 'text'" class="font-md">{{ item.data }}</text>
       </div>

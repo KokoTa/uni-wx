@@ -1,18 +1,18 @@
 <template>
-	<!-- 弹出层 -->
-	<view v-if="status" sytle="z-index: 9999; overflow: hidden;">
-		<!-- 蒙版 -->
-		<view 
-			v-if="mask"
-			class="position-fixed top-0 left-0 right-0 bottom-0"
-			:style="getMaskColor"
-			@click="hide">
-		</view>
-		<!-- 弹出框内容 -->
-		<view ref="popup" class="position-fixed animated" :class="getBodyClass" :style="getBodyStyle">
-			<slot></slot>
-		</view>
-	</view>
+  <!-- 弹出层 -->
+  <view v-if="status" sytle="z-index: 9999; overflow: hidden;">
+    <!-- 蒙版 -->
+    <view
+      v-if="mask"
+      class="position-fixed top-0 left-0 right-0 bottom-0"
+      :style="getMaskColor"
+      @click="hide"
+    ></view>
+    <!-- 弹出框内容 -->
+    <view ref="popup" class="position-fixed animated" :class="getBodyClass" :style="getBodyStyle">
+      <slot></slot>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -92,7 +92,7 @@
 			} catch(err) {
 				console.log(err)
 			}
-			
+
 			// #ifdef APP-PLUS-NVUE
 			this.animation = weex.requireModule('animation')
 			// #endif
@@ -102,7 +102,7 @@
 				this.x = (x > this.maxX) ? this.maxX : x
 				this.y = (y > this.maxY) ? this.maxY : y
 				this.status = true
-				
+
 				// #ifdef APP-PLUS-NVUE
 				this.$nextTick(() => {
 					this.animation.transition(this.$refs.popup, {
@@ -131,7 +131,7 @@
 					}, () => this.status = false)
 				})
 				// #endif
-				
+
 				// #ifndef APP-PLUS-NVUE
 				this.status = false
 				// #endif
@@ -142,9 +142,9 @@
 
 <style scoped>
 .animated {
-	/* #ifdef APP-PLUS-NVUE */
-	transform: scale(0, 0);
-	opacity: 0;
-	/* #endif */
+  /* #ifdef APP-PLUS-NVUE */
+  transform: scale(0, 0);
+  opacity: 0;
+  /* #endif */
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<!-- 头像 -->
-	<image :class="type" :src="src" mode="widthFix" :style="getStyle"></image>
+	<image :class="type" :src="src" mode="widthFix" :style="getStyle" @click="clickEvent"></image>
 </template>
 
 <script>
@@ -17,13 +17,31 @@
 			size: {
 				type: [String, Number],
 				default: 92
+			},
+			clickType: {
+				type: String,
+				default: 'none'
 			}
 		},
 		computed: {
 			getStyle() {
 				return `width: ${this.size}rpx; height: ${this.size}rpx;`
 			}
-		}
+		},
+		methods: {
+			clickEvent() {
+				switch(this.clickType) {
+					case 'navigate':
+						uni.navigateTo({
+							url: '/pages/mail/user-base/user-base'
+						})
+						break
+					default:
+						this.$emit('click')
+						break
+				}
+			}
+		},
 	}
 </script>
 

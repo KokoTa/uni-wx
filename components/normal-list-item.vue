@@ -5,7 +5,10 @@
       <slot name="icon"></slot>
       <image v-if="cover" :src="cover" mode="aspectFill" :style="coverStyle" />
     </view>
-    <view class="flex-1 border-bottom flex align-center justify-between p-3">
+    <view
+      class="flex-1 flex align-center justify-between p-3"
+      :class="showBorderBottom ? 'border-bottom' : ''"
+    >
       <slot name="left">
         <text class="font-md text-dark">{{title}}</text>
       </slot>
@@ -47,7 +50,12 @@
 			coverSize: {
 				type: [String, Number],
 				default: 75
-			}
+      },
+      // 是否显示底边
+      showBorderBottom: {
+        type: Boolean,
+        default: true
+      }
 		},
 		computed: {
 			coverStyle() {

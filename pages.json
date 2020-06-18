@@ -28,6 +28,10 @@
     {
       "path": "pages/chat/chat-set/chat-set",
       "style": {}
+    },
+    {
+      "path": "pages/mail/user-base/user-base",
+      "style": {}
     }
   ],
   "globalStyle": {
