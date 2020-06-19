@@ -528,29 +528,32 @@
 
 /* 页面背景色 */
 .page {
-	background-color: #EDEDED;
-	
+  background-color: #ededed;
 
 
 
 
 
-	
 
-	min-height: 100%;
-	height: auto;
+
+
+  min-height: 100%;
+  height: auto;
 }
 /* 主背景色 */
 .main-gb-color {
-	background-color: #08C060;
+  background-color: #08c060;
 }
 /* 主字体色 */
 .main-font-color {
-	color: #08C060;
+  color: #08c060;
+}
+.main-border-color {
+  border-color: #08c060 !important;
 }
 /* 聊天背景色 */
 .bg-chat-item {
-	background-color: #6BEE68;
+  background-color: #6bee68;
 }
 @font-face {font-family: "iconfont";
   src: url('https://at.alicdn.com/t/font_1365296_vumpzwvr0z.ttf') format('truetype')

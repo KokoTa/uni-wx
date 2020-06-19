@@ -130,7 +130,48 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var NavBar = function NavBar() {__webpack_require__.e(/*! require.ensure | components/nav-bar */ "components/nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/nav-bar.vue */ 54));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var NormalListItem = function NormalListItem() {__webpack_require__.e(/*! require.ensure | components/normal-list-item */ "components/normal-list-item").then((function () {return resolve(__webpack_require__(/*! @/components/normal-list-item.vue */ 78));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var NavBar = function NavBar() {__webpack_require__.e(/*! require.ensure | components/nav-bar */ "components/nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/nav-bar.vue */ 102));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var NormalListItem = function NormalListItem() {__webpack_require__.e(/*! require.ensure | components/normal-list-item */ "components/normal-list-item").then((function () {return resolve(__webpack_require__(/*! @/components/normal-list-item.vue */ 126));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -189,6 +230,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     NavBar: NavBar,
     NormalListItem: NormalListItem },
 
+  computed: {
+    leftNavStyle: function leftNavStyle() {
+      return "top: ".concat(this.top, "px; width: 50rpx;");
+    },
+    scrollStyle: function scrollStyle() {
+      return "height: ".concat(this.scrollHeight, "px;");
+    },
+    leftNavItems: function leftNavItems() {
+      return this.friendList.filter(function (item) {return item.data.length > 0;});
+    },
+    modalTop: function modalTop() {
+      return (this.scrollHeight - uni.upx2px(150)) / 2;
+    } },
+
   data: function data() {
     return {
       topList: [
@@ -240,13 +295,57 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         "迪b",
         "迪c",
         "迪d",
-        "迪e"] }] };
+        "迪e"] }],
 
 
 
+      top: 0,
+      scrollHeight: 0,
+      scrollIntoView: '',
+      leftNavData: null,
+      leftNavItemHeight: 0,
+      curLeftNavItem: null };
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    touchstart: function touchstart(e) {
+      this.changeScroll(e);
+    },
+    touchmove: function touchmove(e) {
+      this.changeScroll(e);
+    },
+    touchend: function touchend(e) {
+      this.curLeftNavItem = null;
+    },
+    changeScroll: function changeScroll(e) {
+      if (e.touches[0]) {
+        var pageY = e.touches[0].pageY;
+
+        pageY = pageY - this.leftNavData.top;
+
+        var index = Math.floor(pageY / this.leftNavItemHeight);
+        var target = this.leftNavItems[index];
+        if (target) {
+          this.scrollIntoView = "item-".concat(target.letter);
+          this.curLeftNavItem = target;
+        }
+      }
+    } },
+
+  onLoad: function onLoad() {var _this = this;
+    var res = uni.getSystemInfoSync();
+    this.top = res.statusBarHeight + uni.upx2px(90);
+    this.scrollHeight = res.windowHeight - this.top;
+
+    this.$nextTick(function () {
+      // 获取侧边栏高度
+      uni.createSelectorQuery().select('#left').boundingClientRect(function (data) {
+        _this.leftNavData = data;
+        _this.leftNavItemHeight = data.height / _this.friendList.length;
+      }).exec();
+    });
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

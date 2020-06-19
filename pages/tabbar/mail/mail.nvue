@@ -1,22 +1,63 @@
 <template>
-	<view>
-		<!-- 标题 -->
-		<NavBar title="通讯录"></NavBar>
+  <view>
+    <!-- 标题 -->
+    <NavBar title="通讯录"></NavBar>
 
-		<!-- 通用列表项 -->
-		<NormalListItem v-for="(item, index) in topList" :key="index" :title="item.title" :cover="item.cover">
-		</NormalListItem>
-		<!-- 好友列表项 -->
-		<block v-for="(item, index) in friendList" :key="index">
-			<view v-if="item.data.length > 0">
-				<view class="py-2 px-3 border-bottom">
-					<text class="font-md text-dark">{{item.letter}}</text>
-				</view>
-				<NormalListItem v-for="(item2, index2) in item.data" :key="index2" :title="item2" cover="/static/userpic/1.jpg">
-				</NormalListItem>
-			</view>
-		</block>
-	</view>
+    <!-- 通讯录列表 -->
+    <scroll-view :scroll-y="true" :scroll-into-view="scrollIntoView" :style="scrollStyle">
+      <!-- 通用列表项 -->
+      <NormalListItem
+        v-for="(item, index) in topList"
+        :key="index"
+        :title="item.title"
+        :cover="item.cover"
+      ></NormalListItem>
+      <!-- 好友列表项 -->
+      <view v-for="(item, index) in friendList" :key="index" :id="'item-' + item.letter">
+        <view v-if="item.data.length" class="py-2 px-3 border-bottom">
+          <text class="font-md text-dark">{{item.letter}}</text>
+        </view>
+        <NormalListItem
+          v-for="(item2, index2) in item.data"
+          :key="index2"
+          :title="item2"
+          cover="/static/userpic/1.jpg"
+        ></NormalListItem>
+      </view>
+    </scroll-view>
+
+    <!-- 侧边栏 -->
+    <view
+      class="position-fixed right-0 bottom-0 bg-light flex align-center justify-center"
+      :style="leftNavStyle"
+    >
+      <view
+        id="left"
+        class="flex flex-column align-center justify-center"
+        @touchstart="touchstart"
+        @touchmove="touchmove"
+        @touchend="touchend"
+      >
+        <view
+          v-for="(item, index) in leftNavItems"
+          :key="index"
+          class="flex flex-1 align-center justify-center"
+        >
+          <text class="font-md text-secondary">{{item.letter}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 字母提示 -->
+    <view
+      v-if="curLeftNavItem"
+      class="position-fixed rounded-circle border flex align-center justify-center bg-light"
+      style="width: 150rpx; height: 150rpx; left: 300rpx;"
+      :style="'top:' + modalTop + 'px;'"
+    >
+      <text class="font-lg">{{curLeftNavItem.letter}}</text>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -28,6 +69,20 @@
 			NavBar,
 			NormalListItem
 		},
+    computed: {
+      leftNavStyle() {
+        return `top: ${this.top}px; width: 50rpx;`
+      },
+      scrollStyle() {
+        return `height: ${this.scrollHeight}px;`
+      },
+      leftNavItems() {
+        return this.friendList.filter((item) => item.data.length > 0)
+      },
+      modalTop() {
+        return (this.scrollHeight - uni.upx2px(150)) / 2
+      }
+    },
 		data() {
 			return {
 				topList: [
@@ -82,15 +137,55 @@
 							"迪e",
 						]
 					}
-				]
+				],
+        top: 0,
+        scrollHeight: 0,
+        scrollIntoView: '',
+        leftNavData: null,
+        leftNavItemHeight: 0,
+        curLeftNavItem: null
 			}
 		},
-		methods: {
+    methods: {
+      touchstart(e) {
+        this.changeScroll(e)
+      },
+      touchmove(e) {
+        this.changeScroll(e)
+      },
+      touchend(e) {
+        this.curLeftNavItem = null
+      },
+      changeScroll(e) {
+        if (e.touches[0]) {
+          let pageY = e.touches[0].pageY
+          // #ifdef MP
+          pageY = pageY - this.leftNavData.top
+          // #endif
+          const index = Math.floor(pageY / this.leftNavItemHeight)
+          const target = this.leftNavItems[index]
+          if (target) {
+            this.scrollIntoView = `item-${target.letter}`
+            this.curLeftNavItem = target
+          }
+        }
+      }
+    },
+		onLoad() {
+      const res = uni.getSystemInfoSync()
+      this.top = res.statusBarHeight + uni.upx2px(90)
+      this.scrollHeight = res.windowHeight - this.top
 
-		}
+      this.$nextTick(() => {
+        // 获取侧边栏高度
+        uni.createSelectorQuery().select('#left').boundingClientRect((data) => {
+          this.leftNavData = data
+          this.leftNavItemHeight = data.height / this.friendList.length
+        }).exec()
+      })
+    }
 	}
 </script>
 
 <style>
-
 </style>

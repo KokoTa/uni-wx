@@ -25,3 +25,5 @@
 23. `uni.createInnerAudioContext` 多个实例在 nvue 中同一时间只能播放一个，而在小程序中同一时间则会播放多个，旧版用 vuex 实现发布订阅，让点击的实例播放，其他实例停止。新版可以用 `uni.$on` 等 API 实现，标签页那边就运用到了该 API
 24. 编译小程序时不能在 html 中使用 `模板字符串`，但 js 里可以使用，因此对于 `:style='...'` 的内容要用计算属性来赋值
 25. `uni.getRecorderManager` 是全局唯一的，旧版需要放到 vuex 中操作，否则会报错，而新版不需要
+26. `getSystemInfoSync` 中的 `windowHeight` 不包含底部 tabbar 的高度
+27. 由于不是浏览器，没有 `document.elementFromPoint` 这个 api，因此通讯录侧边栏滑动功能要用 Y 轴坐标动态计算，但是根据教材，需要把侧边栏填满，然后获取 `侧边栏高度 / 项数 = 项高度` 然后接着计算，而实际情况是字母没有填充满整个高度，因此视频的方法就没用了

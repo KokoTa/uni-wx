@@ -4,7 +4,13 @@
     "pages/tabbar/my/my",
     "pages/tabbar/find/find",
     "pages/tabbar/mail/mail",
-    "pages/chat/chat/chat"
+    "pages/chat/chat/chat",
+    "pages/chat/video/video",
+    "pages/chat/chat-set/chat-set",
+    "pages/mail/user-base/user-base",
+    "pages/mail/user-remark-tag/user-remark-tag",
+    "pages/mail/user-tag-set/user-tag-set",
+    "pages/mail/user-visit-auth/user-visit-auth"
   ],
   "subPackages": [],
   "window": {
@@ -45,5 +51,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap96.json"
 }
