@@ -1,6 +1,6 @@
 <template>
   <!-- 弹出层 -->
-  <view v-if="status" sytle="z-index: 9999; overflow: hidden;">
+  <view v-if="status" style="z-index: 9999; overflow: hidden;">
     <!-- 蒙版 -->
     <view
       v-if="mask"
@@ -57,7 +57,12 @@
 			tabbarHeight: {
 				type: Number,
 				default: 0
-			}
+      },
+      // 是否居中
+      isCenter: {
+        type: Boolean,
+        default: false
+      }
 		},
 		computed: {
 			getMaskColor() {
@@ -65,8 +70,10 @@
 				return `background-color: rgba(0, 0, 0, ${i});`
 			},
 			getBodyClass() {
-				let bodyClass = this.fixedBottom ? 'left-0 right-0 bottom-0' : 'rounded border'
-				return `${bodyClass} ${this.bodyBgClass}`
+        let bodyClass = 'rounded border'
+        if (this.fixedBottom) bodyClass = `left-0 right-0 bottom-0 ${this.bodyBgClass}`
+        if (this.isCenter) bodyClass = 'left-0 right-0 top-0 bottom-0 flex align-center justify-center'
+				return bodyClass
 			},
 			getBodyStyle() {
 				const left = this.x > -1 ? `left: ${this.x}px;` : ''

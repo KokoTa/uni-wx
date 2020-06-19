@@ -95,7 +95,9 @@ export default {
           path: '/pages/mail/user-base/user-base'
         },
         {
-          title: '把他推荐给朋友'
+          title: '把他推荐给朋友',
+          type: 'navigate',
+          path: '/pages/mail/user-send-card/user-send-card'
         },
         {
           title: '设为星标朋友',

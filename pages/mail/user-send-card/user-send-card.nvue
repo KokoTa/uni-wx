@@ -1,0 +1,184 @@
+<template>
+  <view>
+    <!-- 导航 -->
+    <NavBar title="选择" :showBack="true">
+      <NormalButton
+        slot="right"
+        :name="isMultiple ? '发送(' + selectCount + ')' : '多选'"
+        @click="handleNavBar"
+      ></NormalButton>
+    </NavBar>
+
+    <!-- 搜索框 -->
+    <view class="p-3 bg-light position-fixed left-0 right-0" :style="'top:' + searchTop + 'px;'">
+      <input
+        v-model="keyword"
+        type="text"
+        placeholder="搜索"
+        class="bg-white rounded"
+        placeholder-class="text-center"
+        style="height: 80rpx;"
+      />
+    </view>
+    <view style="height: 140rpx;"></view>
+    <!-- 联系人列表 -->
+    <NormalListItem title="更多联系人" :showLeftIcon="false"></NormalListItem>
+    <text class="font-sm text-secondary px-3 py-2">{{ keyword.length > 0 ? '搜索结果' : '最近联系人' }}</text>
+    <NormalListItem
+      v-for="(item, index) in searchList"
+      :key="index"
+      :title="item.name"
+      :cover="item.avatar"
+      :showRight="true"
+      :showRightIcon="false"
+      @click="selectItem(item)"
+    >
+      <view
+        v-if="isMultiple"
+        slot="right"
+        style="width: 40rpx; height: 40rpx;"
+        class="border rounded-circle flex align-center justify-center"
+      >
+        <view
+          v-if="item.checked"
+          style="width: 20rpx; height: 20rpx;"
+          class="main-gb-color rounded-circle"
+        ></view>
+      </view>
+    </NormalListItem>
+    <!-- 无搜索结果 -->
+    <view
+      v-if="searchList.length === 0"
+      class="flex align-center justify-center"
+      style="height: 100rpx;"
+    >
+      <text class="font-md text-light-muted">暂无搜索结果</text>
+    </view>
+
+    <!-- 发送弹窗 -->
+    <Confirm ref="confirm" title="发送给：">
+      <scroll-view scroll-x="true" class="flex" :show-scrollbar="false">
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+        <Avatar class="mr-3" src="/static/userpic/10.jpg" size="60"></Avatar>
+      </scroll-view>
+      <view class="my-3 bg-light rounded p-2">
+        <text class="font text-light-muted">[个人名片]昵称</text>
+      </view>
+      <input type="text" class="font-md border-bottom" style="height: 50rpx;" placeholder="给朋友留言" />
+    </Confirm>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import NormalButton from '@/components/normal-button.vue'
+import NormalListItem from '@/components/normal-list-item.vue'
+import Avatar from '@/components/avatar.vue'
+import Confirm from '@/components/confirm.vue'
+
+export default {
+  components: {
+    NavBar,
+    NormalButton,
+    NormalListItem,
+    Confirm,
+    Avatar
+  },
+  computed: {
+    selectList() {
+      return this.list.filter((item) => item.checked)
+    },
+    selectCount() {
+      return this.selectList.length
+    },
+    searchList() {
+      return this.list.filter((item) => item.name.indexOf(this.keyword) !== -1)
+    }
+  },
+  data() {
+    return {
+      keyword: '',
+      isMultiple: false,
+      list: [
+        {
+          name: '昵称1',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称2',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称3',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称4',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+        {
+          name: '昵称',
+          avatar: '/static/userpic/1.jpg',
+          checked: false
+        },
+      ]
+    }
+  },
+  methods: {
+    handleNavBar() {
+      if (!this.isMultiple) this.isMultiple = true
+      else this.$refs.confirm.show((close) => {
+        console.log('确定')
+        close()
+      })
+    },
+    selectItem(item) {
+      if (this.isMultiple) {
+        if (!item.checked && this.selectCount === 3) return uni.showToast({ title: '只能选三个', icon: 'none' })
+        item.checked = !item.checked
+      } else {
+        this.$refs.confirm.show((close) => {
+          console.log('确定')
+          close()
+        })
+      }
+    }
+  },
+  onLoad() {
+    const res = uni.getSystemInfoSync()
+    this.searchTop = res.statusBarHeight + uni.upx2px(90)
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

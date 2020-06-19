@@ -44,6 +44,10 @@
     {
       "path": "pages/mail/user-visit-auth/user-visit-auth",
       "style": {}
+    },
+    {
+      "path": "pages/mail/user-send-card/user-send-card",
+      "style": {}
     }
   ],
   "globalStyle": {

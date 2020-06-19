@@ -5,6 +5,7 @@
       <NormalButton slot="right" name="完成" @click="save"></NormalButton>
     </NavBar>
 
+    <!-- 备注名 -->
     <view class="flex flex-column">
       <text class="font-sm text-secondary px-3 py-2">备注名</text>
       <input
@@ -16,6 +17,7 @@
       />
     </view>
 
+    <!-- 标签 -->
     <view class="flex flex-column" @click="navigate('mail/user-tag-set/user-tag-set')">
       <text class="font-sm text-secondary px-3 py-2">标签</text>
       <view class="font-md border bg-white p-3 flex align-center flex-wrap pb-2">
