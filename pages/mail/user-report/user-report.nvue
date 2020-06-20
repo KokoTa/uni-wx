@@ -1,0 +1,58 @@
+import modules from '../../../store/modules/audio';
+<template>
+  <view>
+    <!-- 导航 -->
+    <NavBar title="用户投诉" :showBack="true">
+      <NormalButton slot="right" name="投诉" @click="submit"></NormalButton>
+    </NavBar>
+
+    <picker mode="selector" :range="range" @change="change">
+      <NormalListItem :title="cate ? cate : '请选择分类'" showRight :showLeft="false"></NormalListItem>
+    </picker>
+
+    <textarea v-model="content" class="bg-white p-2 font-md" placeholder="请填写投诉内容" />
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import NormalButton from '@/components/normal-button.vue'
+import NormalListItem from '@/components/normal-list-item.vue'
+
+export default {
+  components: {
+    NavBar,
+    NormalButton,
+    NormalListItem
+  },
+  data() {
+    return {
+      content: '',
+      range: ['分类a', '分类b', '分类c'],
+      cate: ''
+    }
+  },
+  methods: {
+    change(e) {
+      const { value } = e.detail
+      this.cate = this.range[value]
+    },
+    submit() {
+      if (!this.cate || !this.content) return uni.showToast({
+        title: '请完善信息',
+        duration: 2000,
+        icon: 'none'
+      });
+
+      uni.showToast({
+        title: '投诉成功',
+        duration: 2000,
+        icon: 'none'
+      });
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

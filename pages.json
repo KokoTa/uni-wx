@@ -48,6 +48,10 @@
     {
       "path": "pages/mail/user-send-card/user-send-card",
       "style": {}
+    },
+    {
+      "path": "pages/mail/user-report/user-report",
+      "style": {}
     }
   ],
   "globalStyle": {

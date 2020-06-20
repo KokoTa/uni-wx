@@ -115,7 +115,9 @@ export default {
           event: 'setBlack'
         },
         {
-          title: '投诉'
+          title: '投诉',
+          type: 'navigate',
+          path: '/pages/mail/user-report/user-report'
         },
       ],
       tagList: [],
