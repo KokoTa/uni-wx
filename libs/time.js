@@ -1,12 +1,12 @@
 export default{
 	// 计算当前日期星座
 	getHoroscope(date) {
-	  let c = ['摩羯','水瓶','双鱼','白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯']
-	  date=new Date(date);
-	  let month = date.getMonth() + 1;
-	  let day = date.getDate();
-	  let startMonth = month - (day - 14 < '865778999988'.charAt(month));
-	  return c[startMonth]+'座';
+    let c = ['摩羯','水瓶','双鱼','白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯']
+    date=new Date(date);
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let startMonth = month - (day - 14 < '865778999988'.charAt(month));
+    return c[startMonth]+'座';
 	},
 	// 计算指定时间与当前的时间差
 	sumAge(data){
@@ -37,7 +37,7 @@ export default{
 		shorttime=shorttime.toString().length<13 ? shorttime*1000 : shorttime;
 		let now = (new Date()).getTime();
 		let cha = (now-parseInt(shorttime))/1000;
-		
+
 		if (cha < 43200) {
 			// 当天
 			return this.dateFormat(new Date(shorttime),"{A} {t}:{ii}");
@@ -49,16 +49,16 @@ export default{
 			return this.dateFormat(new Date(shorttime),"{Y}-{MM}-{DD} {A} {t}:{ii}");
 		}
 	},
-	
+
 	parseNumber(num) {
 		return num < 10 ? "0" + num : num;
 	},
-	 
+
 	dateFormat(date, formatStr) {
 		let dateObj = {},
 			rStr = /\{([^}]+)\}/,
 			mons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-		 
+
 		dateObj["Y"] = date.getFullYear();
 		dateObj["M"] = date.getMonth() + 1;
 		dateObj["MM"] = this.parseNumber(dateObj["M"]);
@@ -74,7 +74,7 @@ export default{
 		dateObj["ii"] = this.parseNumber(dateObj["i"]);
 		dateObj["s"] = date.getSeconds();
 		dateObj["ss"] = this.parseNumber(dateObj["s"]);
-	 
+
 		while(rStr.test(formatStr)) {
 			formatStr = formatStr.replace(rStr, dateObj[RegExp.$1]);
 		}
@@ -82,8 +82,8 @@ export default{
 	},
 	// 获取年龄
 	getAgeByBirthday(data){
-		let birthday=new Date(data.replace(/-/g, "\/")); 
-		let d=new Date(); 
+		let birthday=new Date(data.replace(/-/g, "\/"));
+		let d=new Date();
 		return d.getFullYear()-birthday.getFullYear()-((d.getMonth()<birthday.getMonth()|| d.getMonth()==birthday.getMonth() && d.getDate()<birthday.getDate())?1:0);
 	}
 }

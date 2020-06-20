@@ -14,7 +14,7 @@
             class="flex align-center justify-center"
             hover-class="bg-hover-light"
             style="height: 90rpx; width: 90rpx;"
-            @click="$emit('click')"
+            @click="back"
           >
             <text class="iconfont font-md" :style="fontColorStyle">{{ '\ue60d' }}</text>
           </view>
@@ -29,7 +29,7 @@
               class="flex align-center justify-center"
               hover-class="bg-hover-light"
               style="height: 90rpx; width: 90rpx;"
-              @click="$emit('click')"
+              @click="back"
             >
               <text class="iconfont font-md" :style="fontColorStyle">{{ '\ue682' }}</text>
             </view>

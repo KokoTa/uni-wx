@@ -70,8 +70,8 @@
 				return `background-color: rgba(0, 0, 0, ${i});`
 			},
 			getBodyClass() {
-        let bodyClass = 'rounded border'
-        if (this.fixedBottom) bodyClass = `left-0 right-0 bottom-0 ${this.bodyBgClass}`
+        let bodyClass = `rounded border ${this.bodyBgClass}`
+        if (this.fixedBottom) bodyClass = 'left-0 right-0 bottom-0'
         if (this.isCenter) bodyClass = 'left-0 right-0 top-0 bottom-0 flex align-center justify-center'
 				return bodyClass
 			},

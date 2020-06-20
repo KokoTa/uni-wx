@@ -1,7 +1,9 @@
 <template>
   <view>
+    <!-- 渐变导航 -->
     <TransparentBar :scrollTop="scrollTop"></TransparentBar>
 
+    <!-- 封面 -->
     <view class="position-relative" style="height: 620rpx;">
       <image
         src="/static/imgs/1.jpg"
@@ -19,20 +21,66 @@
       <text class="font-md position-absolute text-white" style="bottom: 45rpx; right: 160rpx;">昵称</text>
     </view>
 
-    <view style="height: 2000rpx;"></view>
+    <!-- 列表 -->
+    <MomentList :list="list"></MomentList>
   </view>
 </template>
 
 <script>
 import TransparentBar from '@/components/transparent-bar.vue'
+import MomentList from '@/components/moment-list.vue'
 
 export default {
   components: {
-    TransparentBar
+    TransparentBar,
+    MomentList
   },
   data() {
     return {
-      scrollTop: 0
+      scrollTop: 0,
+      list: [
+        {
+          id: 1,
+          username: 'a',
+          content: '评论内容评论内容评论内容',
+          avatar: '/static/imgs/1.jpg',
+          image: ['/static/imgs/1.jpg', '/static/imgs/1.jpg', '/static/imgs/1.jpg', '/static/imgs/1.jpg', '/static/imgs/1.jpg'],
+          video: false,
+          comments: [ // 评论
+            {
+              id: 1,
+              username: 'a',
+              content: '评论'
+            }
+          ],
+          supports: [ // 点赞
+            {
+              id: 1,
+              username: 'a',
+              avatar: '/static/imgs/1.jpg',
+            }
+          ],
+          create_time: 123123123
+        },
+        {
+          id: 2,
+          username: 'b',
+          content: '评论内容',
+          avatar: '/static/imgs/1.jpg',
+          video: {
+            poster: '/static/video/demo.jpg',
+            src: '/static/video/demo.mp4',
+          },
+          image: [],
+        },
+        {
+          id: 3,
+          username: 'c',
+          content: '评论内容',
+          avatar: '/static/imgs/1.jpg',
+          image: ['/static/video/demo.jpg'],
+        },
+      ]
     };
   },
   onPageScroll(e) {

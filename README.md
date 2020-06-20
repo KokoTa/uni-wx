@@ -28,3 +28,4 @@
 26. `getSystemInfoSync` 中的 `windowHeight` 不包含底部 tabbar 的高度
 27. 由于不是浏览器，没有 `document.elementFromPoint` 这个 api，因此通讯录侧边栏滑动功能要用 Y 轴坐标动态计算
 28. 小程序获取得的 `pageY` 和 APP 获得的是不同的，前者相对于视图顶部，后者相对于元素顶部
+29. `text` 不能使用点击事件
