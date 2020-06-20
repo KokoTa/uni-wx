@@ -1,23 +1,26 @@
 <template>
-	<view class="page">
-		<!-- 导航 -->
-		<NavBar title="发现"></NavBar>
-		<NormalListItem title="朋友圈" :showRight="true">
-			<text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
-			<view slot="right" class="position-relative p-1">
-				<Avatar src="/static/userpic/10.jpg" size="55"></Avatar>
-				<text class="rounded-circle bg-danger position-absolute" style="width: 20rpx; height: 20rpx; top: 0; right: 0;"></text>
-			</view>
-		</NormalListItem>
-		<!-- 分割线 -->
-		<Divider></Divider>
-		<NormalListItem title="扫一扫" :showRight="true">
-			<text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
-		</NormalListItem>
-		<NormalListItem title="摇一摇" :showRight="true">
-			<text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
-		</NormalListItem>
-	</view>
+  <view class="page">
+    <!-- 导航 -->
+    <NavBar title="发现"></NavBar>
+    <NormalListItem title="朋友圈" :showRight="true" @click="navigate('/pages/find/moments/moments')">
+      <text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
+      <view slot="right" class="position-relative p-1">
+        <Avatar src="/static/userpic/10.jpg" size="55"></Avatar>
+        <text
+          class="rounded-circle bg-danger position-absolute"
+          style="width: 20rpx; height: 20rpx; top: 0; right: 0;"
+        ></text>
+      </view>
+    </NormalListItem>
+    <!-- 分割线 -->
+    <Divider></Divider>
+    <NormalListItem title="扫一扫" :showRight="true">
+      <text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
+    </NormalListItem>
+    <NormalListItem title="摇一摇" :showRight="true">
+      <text slot="icon" class="iconfont font-lg py-1">&#xe667;</text>
+    </NormalListItem>
+  </view>
 </template>
 
 <script>
@@ -25,7 +28,7 @@
 	import NormalListItem from '@/components/normal-list-item.vue'
 	import Avatar from '@/components/avatar.vue'
 	import Divider from '@/components/divider.vue'
-	
+
 	export default {
 		components: {
 			NavBar,
@@ -45,11 +48,14 @@
 			}
 		},
 		methods: {
-
+      navigate(path) {
+        uni.navigateTo({
+          url: path
+        })
+      }
 		}
 	}
 </script>
 
 <style>
-
 </style>

@@ -52,6 +52,10 @@
     {
       "path": "pages/mail/user-report/user-report",
       "style": {}
+    },
+    {
+      "path": "pages/find/moments/moments",
+      "style": {}
     }
   ],
   "globalStyle": {

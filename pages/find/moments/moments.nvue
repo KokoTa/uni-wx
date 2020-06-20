@@ -1,0 +1,45 @@
+<template>
+  <view>
+    <TransparentBar :scrollTop="scrollTop"></TransparentBar>
+
+    <view class="position-relative" style="height: 620rpx;">
+      <image
+        src="/static/imgs/1.jpg"
+        mode="aspectFill"
+        style="height: 590rpx;"
+        class="bg-secondary w-100"
+      />
+
+      <image
+        src="/static/userpic/1.jpg"
+        mode="aspectFill"
+        style="width: 120rpx; height: 120rpx; right: 30rpx;"
+        class="bg-secondary rounded position-absolute bottom-0"
+      />
+      <text class="font-md position-absolute text-white" style="bottom: 45rpx; right: 160rpx;">昵称</text>
+    </view>
+
+    <view style="height: 2000rpx;"></view>
+  </view>
+</template>
+
+<script>
+import TransparentBar from '@/components/transparent-bar.vue'
+
+export default {
+  components: {
+    TransparentBar
+  },
+  data() {
+    return {
+      scrollTop: 0
+    };
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>
