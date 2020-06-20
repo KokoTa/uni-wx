@@ -61,9 +61,9 @@
         <text class="font">{{ isRecording ? '松 开 结 束' : '按 住 说 话' }}</text>
       </view>
       <!-- 表情 -->
-      <IconButton :icon="'\ue6fd'" @click="openActionOrEmoji('emoji')"></IconButton>
+      <IconButton :icon="'\ue605'" @click="openActionOrEmoji('emoji')"></IconButton>
       <!-- 扩展菜单 -->
-      <IconButton v-if="text.length === 0" :icon="'\ue6fd'" @click="openActionOrEmoji('action')"></IconButton>
+      <IconButton v-if="text.length === 0" :icon="'\ue603'" @click="openActionOrEmoji('action')"></IconButton>
       <!-- 发送按钮 -->
       <view v-else class="main-gb-color rounded mr-3 px-2 py-1" @click="send('text')">
         <text class="font-md text-light">发送</text>

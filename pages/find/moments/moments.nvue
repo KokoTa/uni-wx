@@ -22,18 +22,70 @@
     </view>
 
     <!-- 列表 -->
-    <MomentList :list="list"></MomentList>
+    <MomentList :list="list" @action="action"></MomentList>
+
+    <Popup ref="popup" :fixedBottom="true" transformOrigin="center bottom">
+      <view style="height: 105rpx;" class="bg-light flex align-center">
+        <!-- 文本输入框 -->
+        <textarea
+          v-model="content"
+          class="flex-1 p-1 font-md px-3"
+          style="height: 75rpx;"
+          fixed
+          focus
+          @click="focus"
+          @focus="focus"
+        ></textarea>
+        <!-- 表情 -->
+        <IconButton :icon="'\ue605'" @click="hideKeyboard"></IconButton>
+        <!-- 发送按钮 -->
+        <view
+          class="main-gb-color rounded mr-3 px-2 py-1"
+          :class="disabled ? 'bg-light border' : ''"
+        >
+          <text
+            class="font-md text-light"
+            :class="disabled ? 'text-light-muted' : ''"
+            @click="send"
+          >发送</text>
+        </view>
+      </view>
+      <!-- 表情包列表 -->
+      <scroll-view v-if="panelShow" scroll-y="true" style="height: 350rpx;" class="bg-light">
+        <view class="flex flex-wrap">
+          <view
+            v-for="i in 40"
+            :key="i"
+            style="width: 107rpx; height: 107rpx;"
+            class="flex align-center justify-center"
+            hover-class="bg-white"
+            @click="addEmoji"
+          >
+            <text>😄</text>
+          </view>
+        </view>
+      </scroll-view>
+    </Popup>
   </view>
 </template>
 
 <script>
 import TransparentBar from '@/components/transparent-bar.vue'
 import MomentList from '@/components/moment-list.vue'
+import Popup from '@/components/popup.vue'
+import IconButton from '@/components/icon-button.vue'
 
 export default {
   components: {
     TransparentBar,
-    MomentList
+    MomentList,
+    Popup,
+    IconButton
+  },
+  computed: {
+    disabled() {
+      return this.content.length === 0
+    }
   },
   data() {
     return {
@@ -50,7 +102,12 @@ export default {
             {
               id: 1,
               username: 'a',
-              content: '评论'
+              content: '评论评论评论评论评论评论评论 评论评论评论  评论评论评论评论评论评论评论评论评论 评论评论评论评论评论评论评论评论评论'
+            },
+            {
+              id: 1,
+              username: 'a',
+              content: '评论评论评论评论评论评论评论评论评论'
             }
           ],
           supports: [ // 点赞
@@ -80,12 +137,69 @@ export default {
           avatar: '/static/imgs/1.jpg',
           image: ['/static/video/demo.jpg'],
         },
-      ]
+      ],
+      content: '',
+      panelShow: false,
+      commentIndex: -1
     };
   },
   onPageScroll(e) {
     this.scrollTop = e.scrollTop
-  }
+  },
+  methods: {
+    action(obj) {
+      uni.showActionSheet({
+        itemList: ['点赞', '评论'],
+        success: (res) => {
+          const { tapIndex } = res
+          if (tapIndex === 0) this.support(obj)
+          if (tapIndex === 1) this.comment(obj)
+        }
+      });
+    },
+    support({ item, index }) {
+      const { supports } = item
+      const user = {
+        id: 2,
+        username: 'Brain',
+        avatar: '/static/imgs/1.jpg',
+      }
+
+      if (supports) {
+        const index = supports.findIndex(s => s.id === user.id)
+        if (index !== -1) item.supports.splice(index, 1)
+        else item.supports.push(user)
+      }
+
+    },
+    comment({ item, index }) {
+      this.commentIndex = index
+      this.$refs.popup.show()
+    },
+    hideKeyboard() {
+      uni.hideKeyboard()
+      this.panelShow = !this.panelShow
+    },
+    focus() {
+      this.panelShow = false
+    },
+    addEmoji() {
+      this.content += '😄'
+    },
+    send() {
+      if (this.disabled) return
+      const obj = {
+        id: 2,
+        username: 'Brain',
+        content: this.content
+      }
+      this.list[this.commentIndex].comments.push(obj)
+      this.$refs.popup.hide()
+      this.content = ''
+    }
+  },
+  mounted() {
+  },
 };
 </script>
 
