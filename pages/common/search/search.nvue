@@ -1,0 +1,84 @@
+<template>
+  <view class="page">
+    <!-- 导航 -->
+    <NavBar :showBack="true" :showRight="false" :backEvent="true" @back="back">
+      <input
+        slot="title"
+        v-model="text"
+        type="text"
+        :placeholder="placeholder"
+        class="font-md"
+        style="width: 620rpx;"
+      />
+    </NavBar>
+
+    <block v-if="!searchType">
+      <view class="py-5 flex align-center justify-center">
+        <text class="font text-light-muted">搜索指定内容</text>
+      </view>
+
+      <view class="px-4 flex flex-wrap">
+        <view
+          v-for="(item, index) in typeList"
+          :key="index"
+          class="flex align-center justify-center mb-3 border-left border-right"
+          style="width: 223rpx;"
+          @click="searchType = item.key"
+        >
+          <text class="font text-hover-primary">{{item.name}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+
+export default {
+  components: {
+    NavBar
+  },
+  computed: {
+    placeholder() {
+      const index = this.typeList.findIndex((item) => item.key === this.searchType)
+      if (index !== -1) return `搜索${this.typeList[index].name}`
+      return '搜索指定内容'
+    }
+  },
+  data() {
+    return {
+      text: '',
+      typeList: [
+        {
+          name:  '聊天记录',
+          key: 'history'
+        },
+        {
+          name:  '用户',
+          key: 'user'
+        },
+        {
+          name:  '群聊',
+          key: 'group'
+        },
+      ],
+      searchType: ''
+    };
+  },
+  methods: {
+    back () {
+      if (this.searchType) {
+        this.searchType = ''
+      } else {
+        uni.navigateBack({
+          delta: 1
+        })
+      }
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

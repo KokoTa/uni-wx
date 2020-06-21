@@ -60,6 +60,18 @@
     {
       "path": "pages/my/user-info/user-info",
       "style": {}
+    },
+    {
+      "path": "pages/my/code/code",
+      "style": {}
+    },
+    {
+      "path": "pages/my/collect/collect",
+      "style": {}
+    },
+    {
+      "path": "pages/common/search/search",
+      "style": {}
     }
   ],
   "globalStyle": {

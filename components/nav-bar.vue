@@ -12,13 +12,15 @@
           <!-- 返回 -->
           <IconButton v-if="showBack" :icon="'\ue60d'" @click="back"></IconButton>
           <!-- 标题 -->
-          <text class="font-md">{{ getTitle }}</text>
+          <slot name="title">
+            <text class="font-md">{{ getTitle }}</text>
+          </slot>
         </view>
         <!-- 右侧 -->
         <view v-if="showRight" class="flex align-center">
           <slot name="right">
             <!-- 搜索按钮 -->
-            <IconButton :icon="'\ue6e3'" @click="search"></IconButton>
+            <IconButton :icon="'\ue6e3'" @click="openSearch"></IconButton>
             <!-- 添加按钮 -->
             <IconButton :icon="'\ue682'" @click="openExtend"></IconButton>
           </slot>
@@ -83,7 +85,11 @@
 			showRight: {
 				type: Boolean,
 				default: true
-			}
+      },
+      backEvent: {
+        type: Boolean,
+        default: null
+      }
 		},
 		components: {
 			IconButton,
@@ -146,13 +152,22 @@
 			open() {
 				this.$emit('open')
 			},
+			openSearch() {
+				uni.navigateTo({
+					url: '/pages/common/search/search'
+				})
+			},
 			openExtend() {
 				this.$refs.popup.show(uni.upx2px(415), uni.upx2px(50))
 			},
 			back () {
-				uni.navigateBack({
-					delta: 1
-				})
+        if (this.backEvent === false) {
+          uni.navigateBack({
+            delta: 1
+          })
+        } else {
+          this.$emit('back')
+        }
 			}
 		}
 	}

@@ -12,7 +12,7 @@
     <NormalListItem title="账号" :showLeft="false" :showRight="true" @click="update('username')">
       <text slot="right" class="font text-muted">{{userInfo.username}}</text>
     </NormalListItem>
-    <NormalListItem title="二维码名片" :showLeft="false" :showRight="true">
+    <NormalListItem title="二维码名片" :showLeft="false" :showRight="true" @click="goCode">
       <text slot="right" class="iconfont font-md">&#xe647;</text>
     </NormalListItem>
 
@@ -68,6 +68,11 @@ export default {
             close()
           })
       }
+    },
+    goCode() {
+      uni.navigateTo({
+        url: '../code/code'
+      })
     }
   },
 };

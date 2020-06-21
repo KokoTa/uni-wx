@@ -1,0 +1,47 @@
+<template>
+  <view>
+    <!-- 导航 -->
+    <NavBar title="二维码名片" :showBack="true" :showRight="false"></NavBar>
+
+    <view class="p-5">
+      <view class="bg-white rounded p-4">
+        <view class="flex align-center mb-4">
+          <Avatar src="/static/imgs/1.jpg"></Avatar>
+          <view class="pl-4 flex flex-column">
+            <text class="font-md">昵称</text>
+            <text class="font text-light-muted">地区</text>
+          </view>
+        </view>
+        <view class="flex flex-column align-center justify-center">
+          <image
+            src="/static/imgs/1.jpg"
+            mode="aspectFill"
+            style="width: 550rpx; height: 550rpx;"
+            class="mb-4"
+          />
+          <text class="font text-light-muted">扫一扫上边二维码，加上我的微信</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import Avatar from '@/components/avatar.vue'
+
+export default {
+  components: {
+    NavBar,
+    Avatar
+  },
+  data() {
+    return {
+
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>
