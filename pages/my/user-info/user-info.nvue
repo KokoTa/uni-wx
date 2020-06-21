@@ -1,0 +1,77 @@
+<template>
+  <view class="page">
+    <!-- 导航 -->
+    <NavBar title="个人资料" :showBack="true" :showRight="false"></NavBar>
+
+    <NormalListItem title="头像" :showLeft="false" :showRight="true" @click="update('avatar')">
+      <Avatar slot="right" :src="userInfo.avatar" size="120"></Avatar>
+    </NormalListItem>
+    <NormalListItem title="昵称" :showLeft="false" :showRight="true" @click="update('nickname')">
+      <text slot="right" class="font text-muted">{{userInfo.nickname}}</text>
+    </NormalListItem>
+    <NormalListItem title="账号" :showLeft="false" :showRight="true" @click="update('username')">
+      <text slot="right" class="font text-muted">{{userInfo.username}}</text>
+    </NormalListItem>
+    <NormalListItem title="二维码名片" :showLeft="false" :showRight="true">
+      <text slot="right" class="iconfont font-md">&#xe647;</text>
+    </NormalListItem>
+
+    <!-- 修改昵称/账号 -->
+    <Confirm ref="confirm" title="修改">
+      <input v-model="text" type="text" placeholder="修改" class="border-bottom font-md" />
+    </Confirm>
+  </view>
+</template>
+
+<script>
+import NavBar from '@/components/nav-bar.vue'
+import Avatar from '@/components/avatar.vue'
+import NormalListItem from '@/components/normal-list-item.vue'
+import Confirm from '@/components/confirm.vue'
+
+export default {
+  components: {
+    NavBar,
+    Avatar,
+    NormalListItem,
+    Confirm
+  },
+  data() {
+    return {
+      userInfo: {
+        avatar: '/static/userpic/14.jpg',
+        nickname: 'aaaa',
+        username: 'bbbb'
+      },
+      text: ''
+    };
+  },
+  methods: {
+    update(type) {
+      switch(type) {
+        case 'avatar':
+          uni.chooseImage({
+            count: 1,
+            sizeType: ['original', 'compressed'],
+            success: (res) => {
+              this.userInfo.avatar = res.tempFilePaths[0]
+            }
+          })
+          break
+        case 'nickname':
+        case 'username':
+          this.$refs.confirm.show((close) => {
+            if (!this.text.length) return
+            if (type === 'nickname') this.userInfo.nickname = this.text
+            if (type === 'username') this.userInfo.username = this.text
+            this.text = ''
+            close()
+          })
+      }
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

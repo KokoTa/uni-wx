@@ -56,6 +56,10 @@
     {
       "path": "pages/find/moments/moments",
       "style": {}
+    },
+    {
+      "path": "pages/my/user-info/user-info",
+      "style": {}
     }
   ],
   "globalStyle": {
