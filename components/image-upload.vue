@@ -53,7 +53,7 @@ export default {
           const list = [...this.imageList, ...res.tempFilePaths]
           if (list.length > 9) this.imageList = list.slice(0, 9)
           this.imageList = list
-          this.$emit('imageList', this.imageList)
+          this.$emit('chooseImage', this.imageList)
         }
       });
     },
