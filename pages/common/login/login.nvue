@@ -1,0 +1,74 @@
+<template>
+  <view>
+    <!-- loading -->
+    <view
+      v-if="showLoading"
+      class="position-fixed top-0 left-0 right-0 bottom-0 flex align-center justify-center"
+    >
+      <text class="text-muted font">Loading...</text>
+    </view>
+
+    <view v-else>
+      <view class="flex align-center justify-center fon-lg" style="height: 350rpx;">
+        <text style="font-size: 50rpx;">欢迎回来</text>
+      </view>
+      <view class="px-3">
+        <input type="text" class="bg-light px-3 mb-3 font" placeholder="请输入用户名" />
+        <input type="text" class="bg-light px-3 mb-3 font" placeholder="请输入密码" />
+        <input
+          v-if="type === 'register'"
+          type="text"
+          class="bg-light px-3 mb-3 font"
+          placeholder="请输入确认密码"
+        />
+      </view>
+      <view class="p-3 flex align-center justify-center">
+        <view
+          class="main-gb-color rounded p-3 flex align-center justify-center flex-1"
+          hover-class="main-gb-hover-color"
+        >
+          <text class="text-white font-md">{{type === 'login' ? '登 录' : '注 册'}}</text>
+        </view>
+      </view>
+      <view class="flex align-center justify-center">
+        <text
+          class="text-light-muted font p-2"
+          @click="changeType"
+        >{{type === 'login' ? '立即注册' : '马上登录'}}</text>
+        <text class="text-light-muted font p-2">|</text>
+        <text class="text-light-muted font p-2">找回密码</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      type: 'login',
+      showLoading: true
+    };
+  },
+  methods: {
+    changeType() {
+      this.type === 'login' ? this.type = 'register' : this.type = 'login'
+    }
+  },
+  created() {
+    // 模拟登录逻辑判断花费了1000ms
+    setTimeout(() => {
+      // 用户未登录，显示登陆注册
+      this.showLoading = false
+      // 用户已登录，跳转 tabbar
+      // uni.switchTab({
+      //   url: '../../tabbar/index/index'
+      // });
+    }, 1000)
+
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

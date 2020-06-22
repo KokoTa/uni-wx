@@ -1076,6 +1076,9 @@ module.exports = {
   "main-gb-color": {
     "backgroundColor": "#08c060"
   },
+  "main-gb-hover-color": {
+    "backgroundColor": "#189454"
+  },
   "main-font-color": {
     "color": "#08c060"
   },
