@@ -22,7 +22,7 @@
     </view>
     <view style="height: 140rpx;"></view>
     <!-- 联系人列表 -->
-    <NormalListItem title="更多联系人" :showLeftIcon="false"></NormalListItem>
+    <NormalListItem title="更多联系人" :showLeftIconIcon="false"></NormalListItem>
     <text class="font-sm text-secondary px-3 py-2">{{ keyword.length > 0 ? '搜索结果' : '最近联系人' }}</text>
     <NormalListItem
       v-for="(item, index) in searchList"

@@ -3,16 +3,16 @@
     <!-- 导航 -->
     <NavBar title="个人资料" :showBack="true" :showRight="false"></NavBar>
 
-    <NormalListItem title="头像" :showLeft="false" :showRight="true" @click="update('avatar')">
+    <NormalListItem title="头像" :showLeftIcon="false" :showRight="true" @click="update('avatar')">
       <Avatar slot="right" :src="userInfo.avatar" size="120"></Avatar>
     </NormalListItem>
-    <NormalListItem title="昵称" :showLeft="false" :showRight="true" @click="update('nickname')">
+    <NormalListItem title="昵称" :showLeftIcon="false" :showRight="true" @click="update('nickname')">
       <text slot="right" class="font text-muted">{{userInfo.nickname}}</text>
     </NormalListItem>
-    <NormalListItem title="账号" :showLeft="false" :showRight="true" @click="update('username')">
+    <NormalListItem title="账号" :showLeftIcon="false" :showRight="true" @click="update('username')">
       <text slot="right" class="font text-muted">{{userInfo.username}}</text>
     </NormalListItem>
-    <NormalListItem title="二维码名片" :showLeft="false" :showRight="true" @click="goCode">
+    <NormalListItem title="二维码名片" :showLeftIcon="false" :showRight="true" @click="goCode">
       <text slot="right" class="iconfont font-md">&#xe647;</text>
     </NormalListItem>
 

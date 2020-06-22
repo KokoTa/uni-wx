@@ -3,11 +3,11 @@
     <!-- 导航 -->
     <NavBar title="设置朋友圈动态权限" :showBack="true" :showRight="false"></NavBar>
 
-    <NormalListItem title="不让他看我朋友圈" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="不让他看我朋友圈" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
 
-    <NormalListItem title="不看他朋友圈" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="不看他朋友圈" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
   </view>

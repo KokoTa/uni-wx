@@ -88,7 +88,7 @@
       },
       backEvent: {
         type: Boolean,
-        default: null
+        default: false
       }
 		},
 		components: {

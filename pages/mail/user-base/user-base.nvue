@@ -18,7 +18,7 @@
     </view>
 
     <NormalListItem
-      :showLeft="false"
+      :showLeftIcon="false"
       :showRight="true"
       @click="navigate('mail/user-remark-tag/user-remark-tag')"
     >
@@ -34,14 +34,14 @@
     </NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem :showLeft="false" :showRight="true">
+    <NormalListItem :showLeftIcon="false" :showRight="true">
       <view slot="left" class="flex align-center">
         <text class="font-md text-dark mr-3">朋友圈</text>
         <image class="mr-2" src="/static/userpic/1.jpg" style="width: 90rpx; height: 90rpx;" />
         <image class="mr-2" src="/static/userpic/1.jpg" style="width: 90rpx; height: 90rpx;" />
       </view>
     </NormalListItem>
-    <NormalListItem title="更多信息" :showLeft="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="更多信息" :showLeftIcon="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
     <view

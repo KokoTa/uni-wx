@@ -87,9 +87,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*************************************************************!*\
-  !*** E:/BaiduNetdiskDownload/Program/uni-app-wx/pages.json ***!
-  \*************************************************************/
+/*!*******************************************!*\
+  !*** F:/Github/Program/uni-wx/pages.json ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -108,6 +108,7 @@ if (typeof Promise !== 'undefined' && !Promise.prototype.finally) {
 if(uni.restoreGlobal){
   uni.restoreGlobal(weex,plus,setTimeout,clearTimeout,setInterval,clearInterval)
 }
+
 
 
 

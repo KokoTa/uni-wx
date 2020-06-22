@@ -72,6 +72,10 @@
     {
       "path": "pages/common/search/search",
       "style": {}
+    },
+    {
+      "path": "pages/find/add-moment/add-moment",
+      "style": {}
     }
   ],
   "globalStyle": {

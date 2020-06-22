@@ -1,0 +1,82 @@
+<template>
+  <view class="px-3 bg-white">
+    <!-- 导航 -->
+    <NavBar :showBack="true">
+      <NormalButton slot="right" name="发表" @click="submit"></NormalButton>
+    </NavBar>
+
+    <!-- 文字 -->
+    <textarea v-model="text" placeholder="这一刻的想法" class="p-2 font-md mb-3" />
+    <!-- 图文 -->
+    <ImageUpload v-if="type === 'image'" @chooseImage="chooseImage"></ImageUpload>
+    <!-- 视频 -->
+    <view
+      v-if="type === 'video' && !video"
+      class="flex align-center justify-center bg-light rounded"
+      style="height: 350rpx;"
+      hover-class="bg-hover-light"
+      @click="chooseVideo"
+    >
+      <text class="text-muted" style="font-size: 100rpx;">+</text>
+    </view>
+    <video v-if="type === 'video' && video" :src="video" controls></video>
+    <view
+      v-if="type === 'video' && video"
+      class="my-3 flex align-center justify-center bg-light"
+      hover-class=" bg-hover-light"
+      @click="chooseVideo"
+    >
+      <text class="font-md text-muted">点击切换视频</text>
+    </view>
+
+    <NormalListItem title="所在位置" :showLeftIcon="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="提醒谁看" :showLeftIcon="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="谁可以看" :showLeftIcon="false" :showRight="true">
+      <text slot="right" class="font-md">公开</text>
+    </NormalListItem>
+  </view>
+</template>
+
+<script>
+import NavBar from "@/components/nav-bar.vue";
+import NormalButton from "@/components/normal-button.vue";
+import NormalListItem from "@/components/normal-list-item.vue";
+import ImageUpload from "@/components/image-upload.vue";
+
+export default {
+  components: {
+    NavBar,
+    NormalButton,
+    NormalListItem,
+    ImageUpload
+  },
+  data() {
+    return {
+      type: '',
+      imageList: [],
+      video: ''
+    };
+  },
+  methods: {
+    chooseImage(list) {
+      this.imageList = list
+    },
+    chooseVideo() {
+      uni.chooseVideo({
+        count: 1,
+        maxDuration: 10,
+        sourceType: ['camera', 'album'],
+        success: (res) => {
+          this.video = res.tempFilePath;
+        }
+      });
+    }
+  },
+  onLoad(options) {
+    this.type = options.type;
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

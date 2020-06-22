@@ -1,7 +1,7 @@
 <template>
   <view>
     <!-- 渐变导航 -->
-    <TransparentBar :scrollTop="scrollTop"></TransparentBar>
+    <TransparentBar :scrollTop="scrollTop" @clickRight="goAddMoment"></TransparentBar>
 
     <!-- 封面 -->
     <view class="position-relative" style="height: 620rpx;">
@@ -196,6 +196,30 @@ export default {
       this.list[this.commentIndex].comments.push(obj)
       this.$refs.popup.hide()
       this.content = ''
+    },
+    goAddMoment() {
+      const list = [
+        {
+          name: '图文',
+          key: 'image'
+        },
+        {
+          name: '短视频',
+          key: 'video'
+        },
+        {
+          name: '文字',
+          key: 'text'
+        }
+      ]
+      uni.showActionSheet({
+        itemList: list.map((item) => item.name),
+        success: function (res) {
+          uni.navigateTo({
+            url: '../add-moment/add-moment?type=' + list[res.tapIndex].key
+          })
+        }
+      });
     }
   },
   mounted() {

@@ -1,7 +1,7 @@
 <template>
   <!-- 通用列表项 -->
   <view class="bg-white flex align-stretch" hover-class="bg-light" @click="$emit('click')">
-    <view v-if="showLeft" class="flex align-center justify-center py-2 pl-3">
+    <view v-if="showLeftIcon" class="flex align-center justify-center py-2 pl-3">
       <slot name="icon"></slot>
       <image v-if="cover" :src="cover" mode="aspectFill" :style="coverStyle" />
     </view>
@@ -33,7 +33,7 @@
 				type: String,
 				default: ''
 			},
-			showLeft: {
+			showLeftIcon: {
 				type: Boolean,
 				default: true
 			},

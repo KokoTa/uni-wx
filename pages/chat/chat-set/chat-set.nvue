@@ -22,41 +22,41 @@
     </view>
 
     <Divider></Divider>
-    <NormalListItem title="群聊名称" :showLeft="false" :showRight="true">
+    <NormalListItem title="群聊名称" :showLeftIcon="false" :showRight="true">
       <text slot="right" class="font text-muted">我是群聊名称</text>
     </NormalListItem>
-    <NormalListItem title="群二维码" :showLeft="false" :showRight="true">
+    <NormalListItem title="群二维码" :showLeftIcon="false" :showRight="true">
       <text slot="right" class="iconfont font-md text-light-muted">&#xe614;</text>
     </NormalListItem>
-    <NormalListItem title="群公告" :showLeft="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="群公告" :showLeftIcon="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem title="查找聊天记录" :showLeft="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="查找聊天记录" :showLeftIcon="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem title="消息免打扰" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="消息免打扰" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
-    <NormalListItem title="置顶聊天" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="置顶聊天" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
-    <NormalListItem title="强提醒" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="强提醒" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem title="我在本群的昵称" :showLeft="false" :showRight="true">
+    <NormalListItem title="我在本群的昵称" :showLeftIcon="false" :showRight="true">
       <text slot="right" class="font text-muted">昵称</text>
     </NormalListItem>
-    <NormalListItem title="显示群成员名称" :showLeft="false" :showRight="true" :showRightIcon="false">
+    <NormalListItem title="显示群成员名称" :showLeftIcon="false" :showRight="true" :showRightIcon="false">
       <switch slot="right" checked="true" color="#08C060" />
     </NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem title="清空聊天记录" :showLeft="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="清空聊天记录" :showLeftIcon="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
-    <NormalListItem title="投诉" :showLeft="false" :showRight="true"></NormalListItem>
+    <NormalListItem title="投诉" :showLeftIcon="false" :showRight="true"></NormalListItem>
 
     <Divider></Divider>
     <view class="py-3 flex align-center justify-center bg-white" hover-class="bg-light">

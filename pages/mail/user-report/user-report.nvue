@@ -7,7 +7,7 @@ import modules from '../../../store/modules/audio';
     </NavBar>
 
     <picker mode="selector" :range="range" @change="change">
-      <NormalListItem :title="cate ? cate : '请选择分类'" showRight :showLeft="false"></NormalListItem>
+      <NormalListItem :title="cate ? cate : '请选择分类'" showRight :showLeftIcon="false"></NormalListItem>
     </picker>
 
     <textarea v-model="content" class="bg-white p-2 font-md" placeholder="请填写投诉内容" />
