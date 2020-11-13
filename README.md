@@ -1,4 +1,18 @@
-# nvue 笔记
+<!--
+ * @Author: KokoTa
+ * @Date: 2020-10-29 15:47:52
+ * @LastEditTime: 2020-11-12 12:05:30
+ * @LastEditors: KokoTa
+ * @Description:
+ * @FilePath: /uni-wx/README.md
+-->
+# uniapp 开发注意事项
+
+uniapp 开发的坑太多了，这里记录一下= =，
+
+不同端的展现都有可能不同，尤其是每次版本更新，入坑需谨慎，愿天堂没有 uniapp
+
+## nvue 开发注意事项
 
 1. 样式不能简写，比如 `padding: 0 0 0 0;`，必须指定如 `padding-left: 0;`
 2. 引入自定义 icon 需要使用 weex 的模块加载, icon 必须使用 text 包裹
@@ -29,3 +43,8 @@
 27. 由于不是浏览器，没有 `document.elementFromPoint` 这个 api，因此通讯录侧边栏滑动功能要用 Y 轴坐标动态计算
 28. 小程序获取得的 `pageY` 和 APP 获得的是不同的，前者相对于视图顶部，后者相对于元素顶部
 29. `text` 不能使用点击事件
+
+## 其他注意事项
+
+1. 由于没有 vue-router 这种东西，所有页面的权限校验都要经过 onShow 钩子来判断，每个页面都要 mixin 权限校验逻辑
+2. H5 端的 `min-height: 100%` 可能会无效，需要用 `min-height: 100vh` 代替

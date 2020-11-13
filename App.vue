@@ -11,6 +11,12 @@
 				'src': "url('https://at.alicdn.com/t/font_1365296_vumpzwvr0z.ttf')"
 			})
 			// #endif
+
+      // 给 tabbar 加个角标
+      uni.setTabBarBadge({
+        index: 0,
+        text: '1'
+      })
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -1,3 +1,11 @@
+<!--
+ * @Author: KokoTa
+ * @Date: 2020-10-29 15:47:52
+ * @LastEditTime: 2020-11-12 12:00:36
+ * @LastEditors: KokoTa
+ * @Description:
+ * @FilePath: /uni-wx/pages/common/login/login.nvue
+-->
 <template>
   <view>
     <!-- loading -->
@@ -9,17 +17,31 @@
     </view>
 
     <view v-else>
-      <view class="flex align-center justify-center fon-lg" style="height: 350rpx;">
+      <view
+        class="flex align-center justify-center fon-lg"
+        style="height: 350rpx;"
+      >
         <text style="font-size: 50rpx;">欢迎回来</text>
       </view>
       <view class="px-3">
-        <input type="text" class="bg-light px-3 mb-3 font" placeholder="请输入用户名" />
-        <input type="text" class="bg-light px-3 mb-3 font" placeholder="请输入密码" />
+        <input
+          type="text"
+          class="bg-light px-3 mb-3 font"
+          placeholder="请输入用户名"
+          v-model="formData.username"
+        />
+        <input
+          type="text"
+          class="bg-light px-3 mb-3 font"
+          placeholder="请输入密码"
+          v-model="formData.password"
+        />
         <input
           v-if="type === 'register'"
           type="text"
           class="bg-light px-3 mb-3 font"
           placeholder="请输入确认密码"
+          v-model="formData.repassword"
         />
       </view>
       <view class="p-3 flex align-center justify-center">
@@ -27,14 +49,15 @@
           class="main-gb-color rounded p-3 flex align-center justify-center flex-1"
           hover-class="main-gb-hover-color"
         >
-          <text class="text-white font-md">{{type === 'login' ? '登 录' : '注 册'}}</text>
+          <text class="text-white font-md" @click="login">{{
+            type === 'login' ? '登 录' : '注 册'
+          }}</text>
         </view>
       </view>
       <view class="flex align-center justify-center">
-        <text
-          class="text-light-muted font p-2"
-          @click="changeType"
-        >{{type === 'login' ? '立即注册' : '马上登录'}}</text>
+        <text class="text-light-muted font p-2" @click="changeType">{{
+          type === 'login' ? '立即注册' : '马上登录'
+        }}</text>
         <text class="text-light-muted font p-2">|</text>
         <text class="text-light-muted font p-2">找回密码</text>
       </view>
@@ -43,32 +66,48 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  data() {
+  data () {
     return {
       type: 'login',
-      showLoading: true
-    };
-  },
-  methods: {
-    changeType() {
-      this.type === 'login' ? this.type = 'register' : this.type = 'login'
+      showLoading: false,
+      formData: {}
     }
   },
-  created() {
-    // 模拟登录逻辑判断花费了1000ms
-    setTimeout(() => {
-      // 用户未登录，显示登陆注册
-      this.showLoading = false
-      // 用户已登录，跳转 tabbar
-      // uni.switchTab({
-      //   url: '../../tabbar/index/index'
-      // });
-    }, 1000)
-
+  methods: {
+    ...mapActions(['initLogin']),
+    changeType () {
+      this.type === 'login' ? (this.type = 'register') : (this.type = 'login')
+    },
+    async login() {
+      if (this.type === 'login') {
+        await this.initLogin(this.formData)
+        const token = uni.getStorageSync('token')
+        if (token) {
+          uni.switchTab({
+            url: '../../tabbar/index/index'
+          })
+        }
+      }
+      if (this.type === 'register') {
+        console.log('注册')
+      }
+    }
   },
-};
+  created () {
+    // // 模拟登录逻辑判断花费了1000ms
+    // setTimeout(() => {
+    //   // 用户未登录，显示登陆注册
+    //   this.showLoading = false
+    //   // 用户已登录，跳转 tabbar
+    //   uni.switchTab({
+    //     url: '../../tabbar/index/index'
+    //   })
+    // }, 1000)
+  }
+}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
