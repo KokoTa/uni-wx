@@ -1,5 +1,12 @@
+
+
 <script>
+  import { mapActions } from 'vuex'
+
 	export default {
+    methods: {
+      ...mapActions(['initSocket'])
+    },
 		onLaunch: function() {
 			console.log('App Launch')
 
@@ -17,6 +24,9 @@
         index: 0,
         text: '1'
       })
+
+      // 初始化 socket，没有 token 的话会直接跳到注册页
+      this.initSocket()
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -77,13 +77,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['initLogin']),
+    ...mapActions(['initLogin', 'initSocket']),
     changeType () {
       this.type === 'login' ? (this.type = 'register') : (this.type = 'login')
     },
     async login() {
       if (this.type === 'login') {
         await this.initLogin(this.formData)
+        await this.initSocket()
         const token = uni.getStorageSync('token')
         if (token) {
           uni.switchTab({

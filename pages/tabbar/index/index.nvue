@@ -29,7 +29,6 @@
 	import NavBar from '@/components/nav-bar.vue';
 	import ListItem from '@/components/list-item.vue';
 	import Popup from '@/components/popup.vue';
-  import { mapActions } from 'vuex'
   import mixins from '../../../mixins/mixins.js'
 
 	export default {
@@ -90,7 +89,6 @@
 			};
 		},
 		methods: {
-      ...mapActions(['auth']),
 			long({ x, y, index }) {
 				this.itemIndex = index
 
@@ -120,10 +118,7 @@
 				const item = this.list[this.itemIndex]
 				item.isTop = !item.isTop
 			}
-		},
-    created() {
-      this.auth()
-    }
+		}
 	};
 </script>
 

@@ -37,7 +37,6 @@
         <view
           class="flex flex-column"
           style="width: 320rpx; height: 525rpx;"
-          :style="getMenusSytle"
         >
           <view
             v-for="(item, index) in menus"
