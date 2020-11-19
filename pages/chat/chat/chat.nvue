@@ -11,8 +11,10 @@
       class="position-fixed left-0 right-0 px-3"
       :style="chatBodyTopAndBottom"
       :show-scrollbar="false"
+      :scroll-into-view="scrollIntoView"
+      :scroll-with-animation="true"
     >
-      <block v-for="(item, index) in list" :key="index">
+      <view v-for="(item, index) in list" :key="index" :id="'chatItem_' + index">
         <ChatItem
           ref="chatItem"
           :item="item"
@@ -21,7 +23,7 @@
           @long="long"
           @previewImage="previewImage"
         ></ChatItem>
-      </block>
+      </view>
     </scroll-view>
 
     <!-- 蒙版 -->
@@ -432,7 +434,8 @@
         startY: 0, // 按住说话的起始Y坐标
         isCancelRecord: false, // 是否取消发送
         recordTime: 0, // 录音时长
-        recordTimer: null // 录音定时器
+        recordTimer: null, // 录音定时器
+        scrollIntoView: null
       }
     },
     methods: {
@@ -452,8 +455,16 @@
       // 聊天区域滚动到底部
       scrollChatBodyToBottom() {
         // #ifdef APP-PLUS-NVUE
+        // app端
         const lastItem = this.$refs.chatItem[this.$refs.chatItem.length - 1]
         if (lastItem) dom.scrollToElement(lastItem, {})
+        // #endif
+        // #ifndef APP-NVUE
+        // 非app端
+        setTimeout(() => {
+          const lastIndex = this.list.length - 1
+          this.scrollIntoView = `chatItem_${lastIndex}`
+        }, 500)
         // #endif
       },
       // 发送消息
